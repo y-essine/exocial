@@ -10,14 +10,6 @@ const RateLimit = require('express-rate-limit');
 
 const { PORT, mongoUri } = require('./config');
 
-/*
-
-export MONGO_URI='mongodb+srv://ye55ine:1@clusterize.hyupy.mongodb.net/social?retryWrites=true&w=majority'
-
-export SECRET_KEY='SECRET'
-
-*/
-
 const usersRoutes = require('./routes/api/users')
 
 app
@@ -32,7 +24,6 @@ mongoose
     })
     .catch((err) => console.log(err));
 
-// app.use('/api/todoListItems', todoListItemRoutes);
 app.use('/api/users', usersRoutes);
 
 // set up rate limiter: maximum of five requests per minute

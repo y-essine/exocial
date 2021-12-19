@@ -118,13 +118,6 @@ export default {
                     this.$notify({ type: 'error', title: 'Error!', text: "Trouble registering..." });
                 });
 
-            // if (res.status == 200) {
-            //     this.$notify({ type: 'success', title: 'Done!', text: 'User is registered.' });
-            //     this.$router.push('/login');
-            //     return;
-            // }
-            // this.$notify({ type: 'error', title: 'Error!', text: "Trouble registering..." });
-
             this.loading = false;
 
         },
