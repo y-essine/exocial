@@ -59,12 +59,6 @@
 
 import axios from 'axios';
 
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-import { notify } from '@kyvg/vue3-notification';
-
 let online = false;
 
 let serv = online ? '' : 'http://localhost:3000';
