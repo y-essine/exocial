@@ -1,8 +1,8 @@
-# Vite (Vue3) MEVN stack
-Demo: https://vitestack.herokuapp.com/
+# Vite (Vue3) Social Network APP
+Demo: https://vitesocial.herokuapp.com/
 - [![CodeFactor](https://www.codefactor.io/repository/github/y-essine/vite-stack/badge)](https://www.codefactor.io/repository/github/y-essine/vite-stack)
 ## Description
-A vue web app with a responsive UI including todo list and a show section with products from fakestoreapi.com... 
+A vue social network web app with a responsive UI
 Built using vite with vue3 as the front and express, node, mongodb as the backend for the todo list.
 
 ## Dependencies
