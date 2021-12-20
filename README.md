@@ -1,8 +1,8 @@
-# Vite (Vue3) MEVN stack
-Demo: https://vitestack.herokuapp.com/
+# Vite (Vue3) Social Network APP
+Demo: https://vitesocial.herokuapp.com/
 - [![CodeFactor](https://www.codefactor.io/repository/github/y-essine/vite-stack/badge)](https://www.codefactor.io/repository/github/y-essine/vite-stack)
 ## Description
-A vue web app with a responsive UI including todo list and a show section with products from fakestoreapi.com... 
+A vue social network web app with a responsive UI
 Built using vite with vue3 as the front and express, node, mongodb as the backend for the todo list.
 
 ## Dependencies
@@ -51,7 +51,8 @@ Built using vite with vue3 as the front and express, node, mongodb as the backen
 
 ## Config
 As seen in the config.js file `mongoUri: process.env.MONGO_URI,`, the database uri is access through the environment variables so in order to set it up 
-use the cmd `export MONGO_URI=<your_uri>` replacing your_uri with yours.
+use the cmd `export MONGO_URI=<your_uri>` replacing your_uri with yours...
+the same for the jwt secret key `export SECRET_KEY=<your_key>`
 
 ## Running the build
 Run command: `npm run dev`
