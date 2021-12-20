@@ -6,18 +6,7 @@
         </div>
 
         <div class="form flex-col flex items-center space-y-5 text-stone-300 font-bold">
-            <div>
-                <button
-                    class="rounded bg-red-500 hover:bg-red-500/75 p-3 mt-5"
-                    @click="$router.push('/')"
-                >Home</button>
-            </div>
-            <div>
-                <button
-                    class="rounded bg-indigo-500 hover:bg-indigo-500/75 p-3 mt-5"
-                    @click="$router.push('/signup')"
-                >Register</button>
-            </div>
+           
 
             <div class="space-y-3">
                 <h4 class="block">Username:</h4>
@@ -45,7 +34,14 @@
                 <button
                     @click="processUserInfo"
                     class="rounded bg-cyan-700 hover:bg-cyan-700/75 p-3 mt-5"
-                >Submit</button>
+                >Sign In</button>
+            </div>
+
+             <div>
+                <button
+                    class="rounded bg-indigo-500 hover:bg-indigo-500/75 p-3 mt-5 text-xs"
+                    @click="$router.push('/signup')"
+                >Register new account</button>
             </div>
 
             <span v-if="loading" class="text-red-500 opacity-75 !mt-12">
@@ -59,9 +55,8 @@
 
 import axios from 'axios';
 
-let online = true;
 
-let serv = online ? '' : 'http://localhost:3000';
+let serv = import.meta.env.PROD ? '' : 'http://localhost:3000';
 
 
 export default {

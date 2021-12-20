@@ -20,9 +20,13 @@
 
 import axios from 'axios';
 
+const status = import.meta.env.onlineStatus
+
+console.log(status);
+
 let online = true;
 
-let serv = online ? '' : 'http://localhost:3000';
+let serv = status ? '' : 'http://localhost:3000';
 
 export default {
     name: 'Home',
@@ -46,6 +50,7 @@ export default {
     },
     methods: {
         logout() {
+            this.$notify({ clean: true });
             this.$notify({ type: 'warning', title: 'Logged out', text: "Logged out successfully." });
             this.$router.push('/login');
             localStorage.clear();

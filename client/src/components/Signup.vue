@@ -5,19 +5,6 @@
             <h1 class="font-extrabold text-red-500 text-3xl">Signup</h1>
         </div>
         <div class="form flex-col flex items-center space-y-5 text-stone-300 font-bold">
-            <div>
-                <button
-                    class="rounded bg-red-500 hover:bg-red-500/75 p-3 mt-5"
-                    @click="$router.push('/')"
-                >Home</button>
-            </div>
-            <div>
-                <button
-                    class="rounded bg-cyan-700 hover:bg-cyan-700/75 p-3 mt-5"
-                    @click="$router.push('/login')"
-                >Login</button>
-            </div>
-
             <div class="space-y-3">
                 <h4 class="block">Username:</h4>
                 <input
@@ -40,16 +27,6 @@
                     v-model="password"
                 />
             </div>
-            <!-- <div class="space-y-3">
-                <h4 class="block">Confirm password:</h4>
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Confirm password"
-                    class="block rounded focus:outline-none text-neutral-800 bg-stone-400 p-4 placeholder:text-stone-600"
-                    autocomplete="off"
-                />
-            </div>-->
             <div class="space-y-3">
                 <h4 class="block">Email:</h4>
                 <input
@@ -66,6 +43,13 @@
                     class="rounded bg-indigo-500 hover:bg-indigo-500/75 p-3 mt-5"
                     @click="processUserInfo"
                 >Submit</button>
+            </div>
+
+            <div>
+                <button
+                    class="rounded bg-cyan-700 hover:bg-cyan-700/75 p-3 mt-5 text-xs"
+                    @click="$router.push('/login')"
+                >Back to login</button>
             </div>
 
             <span v-if="loading" class="text-red-500 opacity-75 !mt-12">
@@ -110,6 +94,7 @@ export default {
                         this.$notify({ type: 'error', title: 'Error!', text: "Username already registered..." });
                         return;
                     }
+                    this.$notify({ clean: true });
                     this.$notify({ type: 'success', title: 'Sucess!', text: 'User registered successfully' });
                     this.$router.push('/login');
                     return;
