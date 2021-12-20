@@ -6,5 +6,8 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     port: 8080,
+  },
+  define: {
+    prefix: JSON.stringify('http://localhost:3000')
   }
 })

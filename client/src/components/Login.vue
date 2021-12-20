@@ -77,7 +77,7 @@ export default {
                 password: this.password
             }
 
-            const res = await axios.post(serv + '/api/users/login', user)
+            const res = await axios.post(prefix + '/api/users/login', user)
                 .then(res => {
                     if (res.status == 201) {
                         this.$notify({ type: 'error', title: 'Error!', text: "Invalid credentials..." });

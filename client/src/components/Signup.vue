@@ -64,10 +64,6 @@
 import axios from 'axios';
 
 
-let online = true;
-
-let serv = online ? '' : 'http://localhost:3000';
-
 export default {
     name: 'Signup',
     data() {
@@ -88,7 +84,7 @@ export default {
                 email: this.email,
             }
 
-            const res = await axios.post(serv + '/api/users/signup', user)
+            const res = await axios.post(prefix + '/api/users/signup', user)
                 .then(res => {
                     if (res.status == 201) {
                         this.$notify({ type: 'error', title: 'Error!', text: "Username already registered..." });
