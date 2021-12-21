@@ -59,7 +59,7 @@
 
 import axios from 'axios';
 
-prefix = import.meta.env.DEV ? 'http://localhost:3000' : '';
+let prefix = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
 export default {
     name: 'Home',
