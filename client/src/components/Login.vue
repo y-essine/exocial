@@ -56,7 +56,7 @@
 import axios from 'axios';
 
 
-let serv = import.meta.env.PROD ? '' : 'http://localhost:3000';
+prefix = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
 
 export default {
