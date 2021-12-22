@@ -28,15 +28,23 @@ export default {
                 {
                     author: 'Steve Harvey',
                     avatar: 'https://i.imgur.com/iRDybbZ_d.webp?maxwidth=500',
-                    dateAgo: '4w',
+                    dateAgo: '1w',
                     joinDate: '4 APR 2020',
                     content: 'Saepe optio minus rem dolor sit amet! Amet, dolor sit amet conse dolor sit amet!',
                     likes: 99
                 },
                 {
+                    author: 'Itachi Uchiha',
+                    avatar: 'https://i.imgur.com/lF6Ybco.gif',
+                    dateAgo: '3w',
+                    joinDate: '29 FEB 2021',
+                    content: 'Saepe optio minus rem dolor sit amet! Amet, dolor sit amet conse dolor sit amet!inus rem dolor sit amet! Amet, dolor sit lorem',
+                    likes: 613
+                },
+                {
                     author: 'Brad Adams',
                     avatar: 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                    dateAgo: '22h',
+                    dateAgo: '22mo',
                     joinDate: '12 SEP 2012',
                     content: 'Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit amet!',
                     likes: 12
