@@ -1,6 +1,6 @@
 <style>
 .log {
-    padding: 5vh 0vw;
+    padding: 10vh 5vw;
 }
 </style>
 

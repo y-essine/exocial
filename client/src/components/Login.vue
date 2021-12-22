@@ -1,9 +1,3 @@
-<style>
-.log {
-    padding: 12vh 0vw;
-}
-</style>
-
 <template>
     <link rel="stylesheet" href="https://pagecdn.io/lib/font-awesome/5.10.0-11/css/all.min.css" />
     <div class="space-y-10 flex flex-col items-center log">

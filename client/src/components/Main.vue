@@ -2,7 +2,6 @@
 
 import Sidebar from './sidebar/Sidebar.vue'
 import Header from './header/Header.vue'
-
 </script>
 
 <template>
