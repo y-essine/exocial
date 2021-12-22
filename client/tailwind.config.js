@@ -20,6 +20,8 @@ module.exports = {
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
+      'dark-mode': {'raw': '(prefers-color-scheme: dark)'},
+      //enables dark-mode: bg-gray-900 etc
     }
   },
   plugins: [

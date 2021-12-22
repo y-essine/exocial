@@ -1,13 +1,19 @@
+<style>
+.log {
+    padding: 12vh 0vw;
+}
+</style>
+
 <template>
     <link rel="stylesheet" href="https://pagecdn.io/lib/font-awesome/5.10.0-11/css/all.min.css" />
-    <div class="space-y-10">
-        <div class="flex justify-center m-6">
-            <h1 class="font-extrabold text-red-500 text-3xl">Login</h1>
-        </div>
+    <div class="space-y-10 flex flex-col items-center log">
+        <a
+            class="tracking-widest font-extrabold text-2xl uppercase rounded-lg dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
+        >EXOCIAL</a>
+
+        <h1 class="font-extrabold text-red-500 text-3xl">Login</h1>
 
         <div class="form flex-col flex items-center space-y-5 text-stone-300 font-bold">
-           
-
             <div class="space-y-3">
                 <h4 class="block">Username:</h4>
                 <input
@@ -37,7 +43,7 @@
                 >Sign In</button>
             </div>
 
-             <div>
+            <div>
                 <button
                     class="rounded bg-indigo-500 hover:bg-indigo-500/75 p-3 mt-5 text-xs"
                     @click="$router.push('/signup')"
@@ -86,7 +92,7 @@ export default {
                     this.$notify({
                         clean: true
                     })
-                    
+
                     this.$notify({ type: 'success', title: 'Sucess!', text: 'User logged in.' });
                     localStorage.setItem('auth_token', res.data.token);
                     this.$router.push('/');
@@ -118,6 +124,3 @@ export default {
     }
 }
 </script>
-
-<style>
-</style>
