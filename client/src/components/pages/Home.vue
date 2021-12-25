@@ -37,10 +37,10 @@ export default {
     name: 'Home',
     data() {
         return {
+            postOpen: false,
+            loadingFeed: false,
             user: {},
             feed: [],
-            loadingFeed: false,
-            postOpen: false
         }
     },
     methods: {
