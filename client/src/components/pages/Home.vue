@@ -10,10 +10,14 @@ import EmptyPost from '../cards/posts/EmptyPost.vue';
         <h1
             class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
         >Feed :</h1>
-        <button @click="notOpen" class="bg-green-700/50 hover:bg-green-600 text-lg font-extrabold text-gray-200 px-3 py-1 rounded">Post</button>
+        <button
+            @click="notOpen"
+            :class="{ 'bg-green-700/50 hover:bg-green-700': !this.postOpen, 'bg-red-500/50 hover:bg-red-700/50 ': this.postOpen }"
+            class="text-lg font-extrabold text-gray-200 px-3 py-1 rounded"
+        >{{ Text = this.postOpen ? 'Cancel' : 'Post' }}</button>
     </div>
 
-    <EmptyPost v-if="this.open" v-bind:user="this.user"/>
+    <EmptyPost v-if="this.postOpen" v-bind:user="this.user" />
 
     <Post v-bind:feed="feed" />
 
@@ -36,12 +40,12 @@ export default {
             user: {},
             feed: [],
             loadingFeed: false,
-            open: false
+            postOpen: false
         }
     },
     methods: {
         notOpen() {
-            this.open = !this.open;
+            this.postOpen = !this.postOpen;
         },
         async getUser() {
             await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })

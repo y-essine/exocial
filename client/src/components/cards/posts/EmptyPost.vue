@@ -48,7 +48,7 @@ export default {
                             />
                         </svg>
                     </div>
-                    <button class="bg-green-700/50 hover:bg-green-600/80 text-sm font-semibold text-gray-200 px-4 py-2 rounded">Submit</button>
+                    <button class="bg-green-700/50 hover:bg-green-700 text-sm font-semibold text-gray-200 px-4 py-2 rounded">Submit</button>
                 </div>
             </div>
         </div>

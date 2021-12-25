@@ -31,10 +31,6 @@ const UserSchema = new Schema(
             type: String,
             default: ""
         },
-        joinDate: {
-            type: Date,
-            default: Date.now,
-        },
         followers: {
             type: Array,
             default: []
