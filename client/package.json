@@ -14,9 +14,9 @@
     "@tailwindcss/line-clamp": "^0.3.0",
     "axios": "^0.24.0",
     "moment": "^2.29.1",
+    "nprogress": "^0.2.0",
     "validator": "^13.7.0",
     "vue": "^3.2.23",
-    "vue-nprogress": "^0.2.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },

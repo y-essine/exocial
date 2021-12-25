@@ -5,7 +5,6 @@ import router from './router'
 import store from './store'
 import notifications from '@kyvg/vue3-notification'
 
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCircleNotch, faUser, faCog, faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
