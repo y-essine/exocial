@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-gray-300 text-xl font-extrabold">Settings</h1>
+        <h1 class="text-t-primary text-xl font-extrabold">Settings</h1>
     </div>
 </template> 
 

@@ -45,8 +45,8 @@
   box-sizing: border-box;
 
   border: solid 2px transparent;
-  border-top-color: #ef4444;
-  border-left-color: #ef4444;
+  border-top-color: #ef444400;
+  border-left-color: #ef444400;
   border-radius: 50%;
 
   -webkit-animation: nprogress-spinner 400ms linear infinite;

@@ -19,12 +19,14 @@
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "express-rate-limit": "^5.5.1",
+    "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
     "concurrently": "^6.5.0",
+    "dotenv": "^10.0.0",
     "kill-port": "^1.6.1",
     "nodemon": "^2.0.15"
   }

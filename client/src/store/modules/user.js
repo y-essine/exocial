@@ -1,16 +1,43 @@
 export default {
     state: () => ({
-        name: 'Big Smoke'
+        id: '',
+        firstname: '',
+        lastname: '',
+        username: '',
+        email: '',
+        avatar: '',
+        isAdmin: '',
+        isMod: '',
     }),
-    getters: {},
+    getters: {
+        getUser() {
+            return user = {
+                id: state.id,
+                firstname: state.firstname,
+                lastname: state.lastname,
+                username: state.username,
+                email: state.email,
+                avatar: state.avatar,
+                isAdmin: state.isAdmin,
+                isMod: state.isMod,
+            }
+        }
+    },
     mutations: {
-        SET_NAME(state, payload){
-            state.name = payload
+        SET_USER(state, payload) {
+            state.id = payload._id;
+            state.firstname = payload.firstname;
+            state.lastname = payload.lastname;
+            state.username = payload.username;
+            state.email = payload.email;
+            state.avatar = payload.avatar;
+            state.isAdmin = payload.isAdmin;
+            state.isMod = payload.isMod;
         }
     },
     actions: {
-        saveName({ commit }, data) {
-            commit('SET_NAME', data)
+        saveUser({ commit }, data) {
+            commit('SET_USER', data)
         }
     }
 }

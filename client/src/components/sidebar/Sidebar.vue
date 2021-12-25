@@ -4,11 +4,9 @@ import SidebarLink from './SidebarLink.vue'
 </script>
 
 <template >
-    <section name="Sidebar">
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-        <div class="sidebar md:flex flex-col md:flex-row md:min-h-screen">
+        <div class="sidebar md:flex flex-col md:flex-row md:min-h-screen md:relative opacity-75">
             <div
-                class="flex flex-col w-full md:w-64 text-gray-700 bg-white dark-mode:text-gray-300 dark-mode:bg-neutral-900 flex-shrink-0"
+                class="flex flex-col w-full md:w-64 text-gray-800 bg-white dark-mode:text-gray-300 dark-mode:bg-neutral-900 flex-shrink-0"
                 x-data="{ open: false }"
             >
                 <div class="flex-shrink-0 px-6 py-4 flex flex-row items-center justify-between">
@@ -17,7 +15,7 @@ import SidebarLink from './SidebarLink.vue'
                         class=" tracking-widest font-extrabold text-2xl uppercase rounded-lg dark-mode:text-gray-200 focus:outline-none focus:shadow-outline cursor-pointer"
                     >EXOCIAL</a>
                     <button
-                        class="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
+                        class="rounded-lg md:hidden focus:outline-none focus:shadow-outline text-t-primary hover:text-gray-300/80"
                         @click="open = !open"
                     >
                         <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
@@ -40,14 +38,13 @@ import SidebarLink from './SidebarLink.vue'
                     :class="{ 'block': open, 'hidden': !open }"
                     class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto"
                 >
-                    <SidebarLink to="/" icon="fa-home" @click="notOpen">Home</SidebarLink>
-                    <SidebarLink to="/profile" icon="fa-user" @click="notOpen">Profile</SidebarLink>
-                    <SidebarLink to="/settings" icon="fa-cog" @click="notOpen">Settings</SidebarLink>
-                    <SidebarLink to="./" icon="fa-sign-out-alt" @click="logout">Logout</SidebarLink>
+                    <SidebarLink to="/" icon="home" @click="notOpen">Home</SidebarLink>
+                    <SidebarLink to="/profile" icon="user" @click="notOpen">Profile</SidebarLink>
+                    <SidebarLink to="/settings" icon="cog" @click="notOpen">Settings</SidebarLink>
+                    <SidebarLink to="./" icon="sign-out-alt" @click="logout">Logout</SidebarLink>
                 </nav>
             </div>
         </div>
-    </section>
 </template>
 <script>
 

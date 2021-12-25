@@ -1,27 +1,54 @@
 <style>
+@import "./bg.scss";
 .log {
     padding: 10vh 5vw;
 }
 </style>
 
 <template>
-    <link rel="stylesheet" href="https://pagecdn.io/lib/font-awesome/5.10.0-11/css/all.min.css" />
+    <div class="bg-anim">
+        <div v-for="x in 100" class="circle-container" >
+            <div class="circle"></div>
+        </div>
+    </div>
     <div class="space-y-10 flex flex-col items-center log">
         <a
-            class="tracking-widest font-extrabold text-2xl uppercase rounded-lg dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
+            class="tracking-widest font-extrabold text-2xl uppercase rounded-lg text-t-secondary focus:outline-none focus:shadow-outline"
         >EXOCIAL</a>
         <h1 class="font-extrabold text-red-500 text-3xl">Signup</h1>
 
-        <div class="form flex-col flex items-center space-y-5 text-stone-300 font-bold">
+        <div class="form flex-col flex items-center space-y-5 text-t-secondary font-bold">
+            <div class="space-y-3">
+                <h4 class="block">First name:</h4>
+                <input
+                    type="firstname"
+                    name="firstname"
+                    placeholder="First name"
+class="block rounded focus:outline-none text-secondary bg-t-accent p-4 placeholder:text-primary"
+                    autocomplete="off"
+                    v-model="form.firstname"
+                />
+            </div>
+            <div class="space-y-3">
+                <h4 class="block">Last name:</h4>
+                <input
+                    type="lastname"
+                    name="lastname"
+                    placeholder="Last name"
+class="block rounded focus:outline-none text-secondary bg-t-accent p-4 placeholder:text-primary"
+                    autocomplete="off"
+                    v-model="form.lastname"
+                />
+            </div>
             <div class="space-y-3">
                 <h4 class="block">Username:</h4>
                 <input
                     type="username"
                     name="username"
                     placeholder="Username"
-                    class="block rounded focus:outline-none text-neutral-800 bg-stone-400 p-4 placeholder:text-stone-600"
+class="block rounded focus:outline-none text-secondary bg-t-accent p-4 placeholder:text-primary"
                     autocomplete="off"
-                    v-model="username"
+                    v-model="form.username"
                 />
             </div>
             <div class="space-y-3">
@@ -30,9 +57,9 @@
                     type="password"
                     name="password"
                     placeholder="Password"
-                    class="block rounded focus:outline-none text-neutral-800 bg-stone-400 p-4 placeholder:text-stone-600"
+                    class="block rounded focus:outline-none text-secondary bg-t-accent p-4 placeholder:text-primary"
                     autocomplete="off"
-                    v-model="password"
+                    v-model="form.password"
                 />
             </div>
             <div class="space-y-3">
@@ -41,27 +68,27 @@
                     type="email"
                     name="email"
                     placeholder="Email"
-                    class="block rounded focus:outline-none text-neutral-800 bg-stone-400 p-4 placeholder:text-stone-600"
+class="block rounded focus:outline-none text-secondary bg-t-accent p-4 placeholder:text-primary"
                     autocomplete="off"
-                    v-model="email"
+                    v-model="form.email"
                 />
             </div>
             <div>
                 <button
-                    class="rounded bg-indigo-500 hover:bg-indigo-500/75 p-3 mt-5"
+                    class="rounded bg-indigo-500 hover:bg-indigo-500/75 shadow-xl  p-3 mt-5 text-gray-300"
                     @click="processUserInfo"
                 >Submit</button>
             </div>
 
             <div>
                 <button
-                    class="rounded bg-cyan-700 hover:bg-cyan-700/75 p-3 mt-5 text-xs"
+                    class="rounded bg-cyan-700 hover:bg-cyan-700/75 p-3 mt-5 text-xs text-gray-300"
                     @click="$router.push('/login')"
                 >Back to login</button>
             </div>
 
             <span v-if="loading" class="text-red-500 opacity-75 !mt-12">
-                <i class="fas fa-circle-notch fa-spin fa-5x"></i>
+                <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
             </span>
         </div>
     </div>
@@ -71,29 +98,38 @@
 
 import axios from 'axios';
 
-let prefix = import.meta.env.DEV ? 'http://localhost:3000' : '';
+import { validateRegister } from './validator';
+
+axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
 
 export default {
     name: 'Signup',
     data() {
         return {
-            username: '',
-            password: '',
-            email: '',
+            form: {
+                firstname: '',
+                lastname: '',
+                username: '',
+                password: '',
+                email: ''
+            },
             loading: false,
+        }
+    },
+    created() {
+        //user alrdy auth'd
+        if (localStorage.getItem('auth_token')) {
+            this.$notify({ type: 'warning', title: 'Logged!', text: "You are already logged in." });
+            this.$router.push('/');
         }
     },
     methods: {
         async register() {
             this.loading = true;
 
-            let user = {
-                username: this.username,
-                password: this.password,
-                email: this.email,
-            }
+            let user = this.form;
 
-            const res = await axios.post(prefix + '/api/users/signup', user)
+            const res = await axios.post('/auth/signup', user)
                 .then(res => {
                     if (res.status == 201) {
                         this.$notify({ type: 'error', title: 'Error!', text: "Username already registered..." });
@@ -112,22 +148,20 @@ export default {
 
         },
         reset() {
-            this.username = "";
-            this.password = "";
-            this.email = "";
+            this.form.firstname = "";
+            this.form.lastname = "";
+            this.form.username = "";
+            this.form.password = "";
+            this.form.email = "";
         },
         validate() {
-            if (this.username == '' || this.password == '' || this.email == '')
-                return false;
-            return true;
+            return validateRegister(this.form)
         },
         processUserInfo() {
             if (this.validate()) {
                 this.register();
                 this.reset();
-                return;
             }
-            this.$notify({ type: 'error', title: 'Error!', text: "Please make sure to fill up the forms!" });
         }
     }
 

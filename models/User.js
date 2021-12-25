@@ -1,27 +1,59 @@
 const { Schema, model } = require('mongoose');
 
-const UserSchema = new Schema({
-    username : {
-        type: String,
-        required: true,
-        unique: true
+const UserSchema = new Schema(
+    {
+        username: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        firstname: {
+            type: String,
+            required: true,
+        },
+        lastname: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true
+        },
+        avatar: {
+            type: String,
+            default: "https://w7.pngwing.com/pngs/419/473/png-transparent-computer-icons-user-profile-login-user-heroes-sphere-black-thumbnail.png"
+        },
+        bio: {
+            type: String,
+            default: ""
+        },
+        joinDate: {
+            type: Date,
+            default: Date.now,
+        },
+        followers: {
+            type: Array,
+            default: []
+        },
+        followings: {
+            type: Array,
+            default: []
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
+        },
+        isMod: {
+            type: Boolean,
+            default: false
+        }
     },
-    password : {
-        type: String,
-        required: true,
-    },
-    email : {
-        type: String,
-        required: true
-    },
-    avatar : {
-        type: String
-    },
-    registrationDate: {
-        type: Date,
-        default: Date.now,
-    }
-})
+    { timestamps: true }
+)
 
 const UserModel = model('user', UserSchema);
 

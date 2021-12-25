@@ -4,7 +4,36 @@
 
 @tailwind utilities;
 
-:root{
-    background-color: #1d1d1d;
+@layer base {
+    .theme-dark {
+        --color-primary: #1d1d1d;
+        --color-secondary: #262626;
+        --color-tertiary: rgb(64,64,64);
+        --color-accent: #171717;
+
+        --text-primary: #e5e7eb;
+        --text-secondary: #c1c1c1;
+        --text-accent: #8f8f8f;
+    }
+    .theme-light {
+        --color-primary: #e5e7eb;
+        --color-secondary: #f6f6f6;
+        --color-tertiary: #415161;
+        --color-accent: ##171717;
+
+        --text-primary: #2d3440;
+        --text-secondary: #494949;
+        --text-accent: #737373;
+    }
 }
 
+@layer base {
+    :root {
+        @apply theme-light dark-mode:theme-dark;
+    }
+
+    body {
+        @apply bg-primary;
+        transition: color 300ms ease;
+    }
+}

@@ -1,62 +1,73 @@
 <script setup>
 
-import Postcard from '../cards/Post.vue'
+import Post from '../cards/posts/Post.vue';
+import EmptyPost from '../cards/posts/EmptyPost.vue';
 
 </script>
 
 <template >
-    <Postcard v-bind:posts="posts" />
+    <div class="flex justify-between">
+        <h1
+            class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
+        >Feed :</h1>
+        <button @click="notOpen" class="bg-green-700/50 hover:bg-green-600 text-lg font-extrabold text-gray-200 px-3 py-1 rounded">Post</button>
+    </div>
+
+    <EmptyPost v-if="this.open" v-bind:user="this.user"/>
+
+    <Post v-bind:feed="feed" />
+
+    <div v-if="loadingFeed" class="text-red-500 opacity-75 flex justify-center mt-56">
+        <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
+    </div>
 </template>
 
 <script>
 
-// indicate wether to send a cookie in a cross-site
+import axios from 'axios';
+
+axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
+
 
 export default {
     name: 'Home',
     data() {
         return {
-            posts: [
-                {
-                    author: 'Eren Jaeger',
-                    avatar: 'https://i.imgur.com/le5ob6m.gif',
-                    dateAgo: '3m',
-                    joinDate: '19 DEC 2018',
-                    content: 'Saepe optio minus rem dolor sit amet! Amet, dolor sit amet conse dolor sit amet!',
-                    likes: 69
-                },
-                {
-                    author: 'Steve Harvey',
-                    avatar: 'https://i.imgur.com/iRDybbZ_d.webp?maxwidth=500',
-                    dateAgo: '1w',
-                    joinDate: '4 APR 2020',
-                    content: 'Saepe optio minus rem dolor sit amet! Amet, dolor sit amet conse dolor sit amet!',
-                    likes: 99
-                },
-                {
-                    author: 'Itachi Uchiha',
-                    avatar: 'https://i.imgur.com/lF6Ybco.gif',
-                    dateAgo: '3w',
-                    joinDate: '29 FEB 2021',
-                    content: 'Saepe optio minus rem dolor sit amet! Amet, dolor sit amet conse dolor sit amet!inus rem dolor sit amet! Amet, dolor sit lorem',
-                    likes: 613
-                },
-                {
-                    author: 'Brad Adams',
-                    avatar: 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                    dateAgo: '22mo',
-                    joinDate: '12 SEP 2012',
-                    content: 'Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit amet!',
-                    likes: 12
-                }
-
-            ]
-
+            user: {},
+            feed: [],
+            loadingFeed: false,
+            open: false
         }
     },
+    methods: {
+        notOpen() {
+            this.open = !this.open;
+        },
+        async getUser() {
+            await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
+                .then(res => {
+                    this.user = res.data.user;
+                })
+        },
+        async getFeed() {
+            this.loadingFeed = true;
+            await this.getUser().then(async () => {
+                await axios.post('/posts/feed/all', { userId: this.user._id })
+                    .then(res => {
+                        this.feed = res.data;
+                        this.loadingFeed = false;
+                    })
+            })
+        }
+    },
+    async mounted() {
+        await this.getFeed();
+    },
     components: {
-        Postcard
+        Post,
+        EmptyPost
     }
 
 }
+
 </script>

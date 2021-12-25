@@ -3,19 +3,33 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
+const helmet = require('helmet');
+const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const path = require('path');
 const RateLimit = require('express-rate-limit');
 
+dotenv.config();
 
 const { PORT, mongoUri } = require('./config');
 
-const usersRoutes = require('./routes/api/users')
+const authRoute = require('./routes/api/auth')
+const usersRoute = require('./routes/api/users')
+const postsRoute = require('./routes/api/posts')
+
+// set up rate limiter: maximum of five requests per minute
+const limiter = new RateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 100
+});
+
 
 app
     .use(cors())
     .use(morgan('tiny'))
     .use(bodyParser.json())
+    .use(limiter)
+    .use(helmet())
 
 mongoose
     .connect(mongoUri)
@@ -24,16 +38,10 @@ mongoose
     })
     .catch((err) => console.log(err));
 
-app.use('/api/users', usersRoutes);
+app.use('/api/auth', authRoute);
+app.use('/api/users', usersRoute);
+app.use('/api/posts', postsRoute);
 
-// set up rate limiter: maximum of five requests per minute
-const limiter = new RateLimit({
-    windowMs: 1 * 60 * 1000, // 1 minute
-    max: 10
-});
-
-// apply rate limiter to all requests
-app.use(limiter);
 
 if (process.env.NODE_ENV == 'production') {
     app.use(express.static('client/dist'));
