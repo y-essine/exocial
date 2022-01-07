@@ -4,7 +4,8 @@ const Post = require('../../models/Post')
 
 const User = require('../../models/User')
 
-const { getUser, getPostUser } = require('./custom/getUser');
+const { getUser, getPostUser } = require('./custom/users');
+const { createdAt } = require('./custom/posts');
 
 
 //create post
@@ -88,26 +89,30 @@ router.post('/feed/all', async (req, res) => {
         const currentUser = await getPostUser(req.body.userId)
         if (!currentUser)
             return res.status(404).json({ error: 'User not found' });
-        const userPosts = currentUser ? (await Post.find({ userId: currentUser._id }).sort({ createdAt: -1 })) : {};
-        const formatPosts = (userPosts, currentUser) => {
-            return { postUser: currentUser, posts: userPosts }
-        }
-        const myPosts = formatPosts(userPosts, currentUser);
 
+        // my posts
+        // const userPosts = currentUser ? (await Post.find({ userId: currentUser._id }).sort({ createdAt: -1 })) : {};
+        // const formatPosts = (userPosts, currentUser) => {
+        //     return { postUser: currentUser, posts: userPosts }
+        // }
+        // const myPosts = formatPosts(userPosts, currentUser);
+
+        // followed posts
         const followedPosts = await Promise.all(
             currentUser.followings.map(async (followedId) => {
                 let postUser = await getPostUser(followedId);
                 let posts = (postUser) ? (await Post.find({ userId: followedId }).sort({ createdAt: -1 })) : {};
-                return { postUser, posts };
+                return { posts };
             })
         );
 
-        let feed = followedPosts;
-        feed.push(myPosts)
-        res.json(feed);
+        // let feed = followedPosts;
+        // feed.push(myPosts)
+        // let sorted = feed.sort(createdAt)
+        res.json(followedPosts);
 
     } catch (error) {
-        res.status(500).json({ error: error, message: 'dirabomek' })
+        res.status(500).json({ error: error, message: 'drrr' })
     }
 })
 
