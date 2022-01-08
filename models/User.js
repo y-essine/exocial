@@ -39,6 +39,10 @@ const UserSchema = new Schema(
             type: Array,
             default: []
         },
+        posts: [{
+            type: Schema.Types.ObjectId,
+            ref: 'post'
+        }],
         isAdmin: {
             type: Boolean,
             default: false

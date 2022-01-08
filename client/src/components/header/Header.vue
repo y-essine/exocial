@@ -12,12 +12,16 @@
             </div>
             <div class="flex items-center columns-2">
                 <div class="col">
-                    <img
-                        class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left"
-                        :src="user.avatar"
-                        alt="avatar"
-                    />
+                    <router-link to="/profile">
+                        <img
+                            :class="{ 'admin' : user.isAdmin }"
+                            class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left"
+                            :src="user.avatar"
+                            alt="avatar"
+                        />
+                    </router-link>
                 </div>
+
                 <div class="col">
                     <div class="flex justify-between">
                         <h1
@@ -49,3 +53,20 @@ export default {
     },
 }
 </script>
+
+
+
+<style scoped>
+.admin {
+    padding: 0.25rem;
+    box-shadow: 0 1px 5px 2px rgba(225, 131, 131, 0.25),
+        0 -1px 0 0 rgba(165, 181, 222, 0.25),
+        1px 0 0 0 rgba(225, 131, 151, 0.25),
+        -1px 0 0 0 rgba(165, 181, 222, 0.25),
+        1px -1px 0 0 rgba(195, 156, 208, 0.5),
+        -1px 1px 0 0 rgba(188, 208, 156, 0.5),
+        1px 1px 0 0 rgba(255, 105, 105, 0.75),
+        -1px -1px 0 0 rgba(235, 208, 135, 0.75);
+}
+
+</style>

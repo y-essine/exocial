@@ -31,7 +31,7 @@ export default {
                         <small class="text-sm text-t-accent">Just now</small>
                 </div>
                 <p class="text-t-accent text-xs">Joined {{ formatDate(user.createdAt) }}.</p>
-                <textarea class="mt-3 text-t-secondary rounded w-full xs:h-32 sm:h-48  outline-none resize-none text-sm bg-primary">{{  }}</textarea>
+                <textarea class="mt-3 text-t-secondary rounded w-full h-32 sm:h-48 p-3 outline-none resize-none text-sm bg-primary">{{  }}</textarea>
                 <div class="mt-2 flex items-center justify-between">
                     <div class="flex mr-2 text-t-accent text-xs">
                         <svg

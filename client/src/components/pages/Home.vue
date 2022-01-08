@@ -59,6 +59,7 @@ export default {
                 await axios.post('/posts/feed/all', { userId: this.user._id })
                     .then(res => {
                         this.feed = res.data;
+                        console.log(res.data);
                         this.loadingFeed = false;
                     })
             })

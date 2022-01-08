@@ -86,33 +86,55 @@ router.get('/:id', async (req, res) => {
 //get (all) posts
 router.post('/feed/all', async (req, res) => {
     try {
+        let feed = [];
+
         const currentUser = await getPostUser(req.body.userId)
         if (!currentUser)
             return res.status(404).json({ error: 'User not found' });
 
         // my posts
-        // const userPosts = currentUser ? (await Post.find({ userId: currentUser._id }).sort({ createdAt: -1 })) : {};
-        // const formatPosts = (userPosts, currentUser) => {
-        //     return { postUser: currentUser, posts: userPosts }
-        // }
-        // const myPosts = formatPosts(userPosts, currentUser);
+        const userPosts = currentUser ? (await Post.find({ author: currentUser._id })
+            .populate('author', 'username avatar firstname lastname createdAt')
+            .sort({ createdAt: -1 })) : {};
+        userPosts.forEach(element => {
+            feed.push(element)
+        });
 
         // followed posts
-        const followedPosts = await Promise.all(
+        await Promise.all(
             currentUser.followings.map(async (followedId) => {
                 let postUser = await getPostUser(followedId);
-                let posts = (postUser) ? (await Post.find({ userId: followedId }).sort({ createdAt: -1 })) : {};
-                return { posts };
+                let posts = (postUser) ? (await Post.find({ author: followedId })
+                    .populate('author', 'username avatar firstname lastname createdAt')
+                    .sort({ createdAt: -1 })) : {};
+                posts.forEach(element => {
+                    feed.push(element)
+                });
             })
         );
 
-        // let feed = followedPosts;
-        // feed.push(myPosts)
-        // let sorted = feed.sort(createdAt)
-        res.json(followedPosts);
+        res.json(feed.sort(createdAt));
 
     } catch (error) {
-        res.status(500).json({ error: error, message: 'drrr' })
+        res.status(500).json({ error: error, message: 'Caught exception, error...' })
+    }
+})
+
+
+// get user posts
+router.get('/:id/posts', async (req, res) => {
+    let feed = [];
+    try {
+        const userPosts = await (Post.find({ author: req.params.id })
+            .populate('author', 'username avatar firstname lastname createdAt')
+            .sort({ createdAt: -1 }));
+        userPosts.forEach(element => {
+            feed.push(element)
+        });
+        return res.status(200).json(feed)
+
+    } catch (error) {
+        res.status(500).json({ error: error })
     }
 })
 
