@@ -32,7 +32,7 @@ const routes = [
             },
             {
                 path: '/user/:username',
-                name: 'User Profile',
+                name: 'User',
                 component: () => import('/src/components/pages/UserProfile.vue')
             },
         ]

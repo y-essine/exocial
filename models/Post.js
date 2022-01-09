@@ -11,10 +11,10 @@ const PostSchema = new Schema({
         required: true,
         max: 500,
     },
-    likes: {
-        type: Array,
-        default: []
-    }
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }]
 },
     { timestamps: true }
 )

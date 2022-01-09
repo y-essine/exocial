@@ -14,6 +14,9 @@ export default {
         },
         fromNow(date) {
             return moment(date, "YYYY-MM-DDThh:mm:ss.sssZ").fromNow()
+        },
+        likePost(postId) {
+            
         }
     }
 }
@@ -24,7 +27,7 @@ export default {
     <div class="post bg-secondary shadow-lg rounded-lg md:mx-auto my-5 md:max-w-2xl">
         <!--horizantil margin is just for display-->
         <div class="flex items-start px-4 py-6">
-            <router-link :to="'/user/' + post.author.username ">
+            <router-link :to="'/user/' + post.author.username">
                 <img
                     class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left cursor-pointer"
                     v-bind:src="post.author.avatar"
@@ -49,6 +52,7 @@ export default {
                             viewBox="0 0 24 24"
                             class="w-4 h-4 mr-1 cursor-pointer"
                             stroke="currentColor"
+                            @click="likePost(post._id)"
                         >
                             <path
                                 stroke-linecap="round"
@@ -58,6 +62,15 @@ export default {
                             />
                         </svg>
                         <span>{{ post.likes.length }}</span>
+                    </div>
+                    <div class="-space-x-2">
+                        <img
+                            v-for="(liker,index) in post.likes.slice(0,10)"
+                            :src="liker.avatar"
+                            :style="{'z-index': 20-index}"
+                            class="relative inline object-cover w-6 h-6 border-2 border-secondary rounded-full"
+                            alt="{{liker.username}}"
+                        />
                     </div>
                 </div>
             </div>
