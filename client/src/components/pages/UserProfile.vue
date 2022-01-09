@@ -56,8 +56,8 @@ import Post from '../cards/posts/Post.vue';
             >Posts</h1>
             <div class="mt-8">
                 <transition-group name="post-list" tag="ul">
-                    <li v-for="post in posts" :key="post">
-                        <Post v-bind:post="post" />
+                    <li v-for="(post,index) in posts" :key="post">
+                        <Post v-bind:post="post"  :index="index" :currentUser="user"/>
                     </li>
                 </transition-group>
                 <div

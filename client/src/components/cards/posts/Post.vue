@@ -2,10 +2,29 @@
 
 import moment from 'moment'
 
+import axios from 'axios';
+
+axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
+
+
+import Like from './ui/Like.vue'
+
 export default {
     props: {
         post: {
             required: true
+        },
+        index: {
+            required: true
+        },
+        currentUser: {
+            required: true
+        }
+    },
+    data() {
+        return {
+            isLiked: false,
+            isLocallyLiked: false,
         }
     },
     methods: {
@@ -15,10 +34,53 @@ export default {
         fromNow(date) {
             return moment(date, "YYYY-MM-DDThh:mm:ss.sssZ").fromNow()
         },
-        likePost(postId) {
-            
-        }
+        checkIfLiked() {
+            this.post.likes.forEach(element => {
+                if (this.currentUser._id == element._id) {
+                    this.isLiked = true
+                    this.isLocallyLiked = true
+                }
+            });
+        },
+        async likePost(postId) {
+            let likers = this.post.likes;
+            let userId = this.currentUser._id;
+            if (!this.isLocallyLiked) {
+                likers.push(this.currentUser)
+                this.isLocallyLiked = true
+
+                await axios.put('/posts/' + postId + '/like', { userId: userId })
+                    .then(res => {
+                        // this.$notify(res.data.message);
+                    }, err => {
+                        this.$notify({ type: 'error', title: 'Error!', text: "Trouble in like/dislike..." });
+                    });
+
+                return;
+            }
+            likers.forEach(async (element, index) => {
+                if (element._id == this.currentUser._id) {
+                    likers.splice(index, 1);
+                    this.isLocallyLiked = false;
+
+                    await axios.put('/posts/' + postId + '/like', { userId: userId })
+                        .then(res => {
+                            // this.$notify(res.data.message);
+                        }, err => {
+                            this.$notify({ type: 'error', title: 'Error!', text: "Trouble in like/dislike..." });
+                        });
+                }
+            })
+        },
+
+    },
+    created() {
+        this.checkIfLiked();
+    },
+    components: {
+        Like
     }
+
 }
 </script>
 
@@ -47,27 +109,15 @@ export default {
                 <p class="mt-3 text-t-secondary text-sm">{{ post.content }}</p>
                 <div class="mt-4 flex items-center">
                     <div class="flex mr-2 text-t-accent text-xs">
-                        <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            class="w-4 h-4 mr-1 cursor-pointer"
-                            stroke="currentColor"
-                            @click="likePost(post._id)"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                            />
-                        </svg>
+                        <Like @mouseup="likePost(post._id)" :checked="this.isLiked" :index="index" />
                         <span>{{ post.likes.length }}</span>
                     </div>
                     <div class="-space-x-2">
                         <img
-                            v-for="(liker,index) in post.likes.slice(0,10)"
+                            v-for="(liker,index) in post.likes.slice(0, 10)"
+                            :key="liker._id"
                             :src="liker.avatar"
-                            :style="{'z-index': 20-index}"
+                            :style="{ 'z-index': 20 - index }"
                             class="relative inline object-cover w-6 h-6 border-2 border-secondary rounded-full"
                             alt="{{liker.username}}"
                         />

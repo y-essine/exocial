@@ -30,8 +30,8 @@ import NewPost from '../cards/posts/NewPost.vue';
     />
 
     <transition-group name="post-list" tag="ul">
-        <li v-for="post in feed" :key="post">
-            <Post v-bind:post="post" />
+        <li v-for="(post,index) in feed" :key="post._id">
+            <Post v-bind:post="post" :index="index" :currentUser="user"/>
         </li>
     </transition-group>
     <div v-if="loadingFeed" class="text-red-500 opacity-75 flex justify-center mt-56">
