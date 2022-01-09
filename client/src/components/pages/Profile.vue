@@ -2,7 +2,7 @@
 
 import Post from '../cards/posts/Post.vue';
 
-</script>
+ </script>
 
 <template>
     <div class="flex-none">
@@ -38,6 +38,11 @@ import Post from '../cards/posts/Post.vue';
                         <div>
                             <h1 class="text-lg font-semibold text-t-secondary">{{ user.email }}</h1>
                         </div>
+                    </div>
+                    <div v-if="user.isAdmin" class="flex justify-center mt-4 ">
+                        <h1
+                            class="admin inline text-lg font-extrabold text-red-500 px-3 py-1 rounded bg-accent"
+                        >Admin</h1>
                     </div>
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
                         <h1
@@ -83,7 +88,7 @@ export default {
     data() {
         return {
             loadingPosts: false,
-            user: { followers: [], followings: []},
+            user: { followers: [], followings: [] },
             posts: {}
         }
     },
