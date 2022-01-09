@@ -1,7 +1,7 @@
 <script setup>
 
 import Post from '../cards/posts/Post.vue';
-import EmptyPost from '../cards/posts/EmptyPost.vue';
+import NewPost from '../cards/posts/NewPost.vue';
 
 </script>
 
@@ -9,7 +9,12 @@ import EmptyPost from '../cards/posts/EmptyPost.vue';
     <div class="flex justify-between">
         <h1
             class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
-        >Feed :</h1>
+        >Feed </h1>
+        <!-- <button
+            @click="addPost('🌊😒 Newest Post 🌊😒')"
+            class="text-lg font-extrabold text-gray-200 px-3 py-1 rounded bg-green-700/50 hover:bg-green-700"
+        >AddPost
+        </button> -->
         <button
             @click="notOpen"
             :class="{ 'bg-green-700/50 hover:bg-green-700': !this.postOpen, 'bg-red-500/50 hover:bg-red-700/50 ': this.postOpen }"
@@ -17,16 +22,26 @@ import EmptyPost from '../cards/posts/EmptyPost.vue';
         >{{ Text = this.postOpen ? 'Cancel' : 'Post' }}</button>
     </div>
 
-    <EmptyPost v-if="this.postOpen" v-bind:user="this.user" />
+    <NewPost
+        v-bind:isOpen="this.postOpen"
+        @closePost="notOpen"
+        @newPost="addPost"
+        v-bind:user="this.user"
+    />
 
-    <Post v-bind:feed="feed" />
-
+    <transition-group name="post-list" tag="ul">
+        <li v-for="post in feed" :key="post">
+            <Post v-bind:post="post" />
+        </li>
+    </transition-group>
     <div v-if="loadingFeed" class="text-red-500 opacity-75 flex justify-center mt-56">
         <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
     </div>
 </template>
 
 <script>
+
+import moment from 'moment'
 
 import axios from 'axios';
 
@@ -44,6 +59,15 @@ export default {
         }
     },
     methods: {
+        addPost(newContent) {
+            let post = {
+                author: this.user,
+                content: newContent,
+                likes: [],
+                createdAt: moment()
+            }
+            this.feed.unshift(post)
+        },
         notOpen() {
             this.postOpen = !this.postOpen;
         },
@@ -59,7 +83,6 @@ export default {
                 await axios.post('/posts/feed/all', { userId: this.user._id })
                     .then(res => {
                         this.feed = res.data;
-                        console.log(res.data);
                         this.loadingFeed = false;
                     })
             })
@@ -70,9 +93,23 @@ export default {
     },
     components: {
         Post,
-        EmptyPost
+        NewPost
     }
 
 }
 
 </script>
+
+<style scoped>
+.post-list-move {
+    transition: transform 0.7s ease;
+}
+.post-list-enter-active,
+.post-list-leave-active {
+    transition: all 0.3s ease-in;
+}
+.post-list-enter-from,
+.post-list-leave-to {
+    opacity: 0;
+}
+</style>

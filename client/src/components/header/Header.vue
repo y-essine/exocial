@@ -5,16 +5,21 @@
                 <h1
                     class="font-extrabold text-red-500 hover:text-red-500/70 text-3xl"
                 >{{ this.$route.name }}</h1>
-                <h1 class="font-semibold text-t-accent text-sm mt-6">
-                    Exocial >
-                    <h1 class="inline text-t-secondary">{{ this.$route.name }}</h1>
-                </h1>
+                <div class="mt-6 flex">
+                    <router-link to="/">
+                        <h1
+                            class="text-t-accent font-semibold text-sm hover:text-t-secondary cursor-pointer"
+                        >Exocial</h1>
+                    </router-link>
+                    <h1 class="ml-1 text-t-accent font-semibold text-sm">{{ '>' }}</h1>
+                    <h1 class="ml-1 text-t-secondary font-semibold text-sm">{{ this.$route.name }}</h1>
+                </div>
             </div>
             <div class="flex items-center columns-2">
                 <div class="col">
-                    <router-link to="/profile">
+                    <router-link to="/profile" class=" min-w-fit">
                         <img
-                            :class="{ 'admin' : user.isAdmin }"
+                            :class="{ 'admin': user.isAdmin }"
                             class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left"
                             :src="user.avatar"
                             alt="avatar"
@@ -68,5 +73,4 @@ export default {
         1px 1px 0 0 rgba(255, 105, 105, 0.75),
         -1px -1px 0 0 rgba(235, 208, 135, 0.75);
 }
-
 </style>

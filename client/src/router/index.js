@@ -29,7 +29,12 @@ const routes = [
                 path: '/settings',
                 name: 'Settings',
                 component: () => import('/src/components/pages/Settings.vue')
-            }
+            },
+            {
+                path: '/user/:username',
+                name: 'User Profile',
+                component: () => import('/src/components/pages/UserProfile.vue')
+            },
         ]
     },
     {
@@ -87,6 +92,9 @@ router.beforeEach((to, from) => {
         case 'Settings':
             document.title = 'EXOCIAL - Settings';
             break;
+        case 'User Profile':
+                document.title = 'EXOCIAL - User Profile';
+                break;
         default:
             document.title = 'EXOCIAL';
             break;

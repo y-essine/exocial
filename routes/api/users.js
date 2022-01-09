@@ -54,6 +54,19 @@ router.get("/:id", async (req, res) => {
     }
 })
 
+//get user by username
+router.get("/username/:username", async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username })
+        if (!user)
+            return res.status(201).json({ message: 'user not found' });
+        const { password, updatedAt, ...other } = user._doc;
+        return res.status(200).json({ user: other });
+    } catch (err) {
+        return res.status(500).json({ message: err })
+    }
+})
+
 
 //follow user
 router.put('/:id/follow', async (req, res) => {

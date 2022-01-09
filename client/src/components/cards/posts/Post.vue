@@ -3,7 +3,11 @@
 import moment from 'moment'
 
 export default {
-    props: ['feed'],
+    props: {
+        post: {
+            required: true
+        }
+    },
     methods: {
         formatDate(date) {
             return moment(date, 'YYYY-MM-DDThh:mm:ss.sssZ').format('DD MMM YYYY')
@@ -17,23 +21,24 @@ export default {
 
 <template>
     <!-- post card -->
-    <div
-        v-for="post in feed"
-        class="bg-secondary shadow-lg rounded-lg md:mx-auto my-5 md:max-w-2xl"
-    >
+    <div class="post bg-secondary shadow-lg rounded-lg md:mx-auto my-5 md:max-w-2xl">
         <!--horizantil margin is just for display-->
         <div class="flex items-start px-4 py-6">
-            <img
-                class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left"
-                v-bind:src="post.author.avatar"
-                alt="avatar"
-            />
+            <router-link :to="'/user/' + post.author.username ">
+                <img
+                    class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left cursor-pointer"
+                    v-bind:src="post.author.avatar"
+                    alt="avatar"
+                />
+            </router-link>
             <div class="w-full">
                 <div class="flex items-center justify-between">
                     <h2
-                        class="text-lg font-semibold text-t-primary -mt-1"
+                        class="text-lg font-semibold text-t-primary -mt-1 cursor-pointer"
                     >{{ post.author.firstname + ' ' + post.author.lastname }}</h2>
-                    <small class="text-sm text-t-accent">{{ fromNow(post.createdAt) }}</small>
+                    <small
+                        class="text-sm text-t-accent cursor-pointer"
+                    >{{ fromNow(post.createdAt) }}</small>
                 </div>
                 <p class="text-t-accent text-xs">Joined {{ formatDate(post.author.createdAt) }}.</p>
                 <p class="mt-3 text-t-secondary text-sm">{{ post.content }}</p>
@@ -42,7 +47,7 @@ export default {
                         <svg
                             fill="none"
                             viewBox="0 0 24 24"
-                            class="w-4 h-4 mr-1"
+                            class="w-4 h-4 mr-1 cursor-pointer"
                             stroke="currentColor"
                         >
                             <path

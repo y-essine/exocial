@@ -9,7 +9,7 @@ import Post from '../cards/posts/Post.vue';
         <div class>
             <h1
                 class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
-            >Details</h1>
+            >Details </h1>
             <div
                 class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-neutral-900 rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8"
             >
@@ -41,10 +41,10 @@ import Post from '../cards/posts/Post.vue';
                     </div>
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
                         <h1
-                            class="font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
+                            class="font-semibold text-t-secondary hover:text-gray-400 text-md"
                         >{{ 'Followers : ' + user.followers.length }}</h1>
                         <h1
-                            class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
+                            class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md"
                         >{{ 'Following : ' + user.followings.length }}</h1>
                     </div>
                 </div>
@@ -73,6 +73,10 @@ import Post from '../cards/posts/Post.vue';
 
 <script >
 
+
+import { mapState } from 'vuex';
+
+
 import axios from 'axios';
 
 axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
@@ -83,20 +87,25 @@ export default {
     data() {
         return {
             loadingPosts: false,
-            user: { followers: [], followings: []},
+            user: { followers: [], followings: [] },
             posts: {}
         }
     },
     methods: {
         async getUser() {
-            await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
+            await axios.get('/users/username/' + this.$route.params.username)
                 .then(res => {
                     this.user = res.data.user;
                 })
+
+
+
         },
         async getPosts() {
             this.loadingPosts = true;
             await this.getUser().then(async () => {
+                if (this.currentUser.username == this.$route.params.username)
+                    return this.$router.push('/profile')
                 await axios.get('/posts/' + this.user._id + '/posts')
                     .then(res => {
                         this.posts = res.data;
@@ -107,6 +116,11 @@ export default {
     },
     async mounted() {
         await this.getPosts();
+    },
+    computed: {
+        ...mapState({
+            currentUser: state => state.user
+        })
     },
     components: {
         Post
