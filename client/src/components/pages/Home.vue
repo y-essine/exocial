@@ -1,10 +1,3 @@
-<script setup>
-
-import Post from '../cards/posts/Post.vue';
-import NewPost from '../cards/posts/NewPost.vue';
-
-</script>
-
 <template >
     <div class="flex justify-between">
         <h1
@@ -23,7 +16,7 @@ import NewPost from '../cards/posts/NewPost.vue';
     </div>
 
     <NewPost
-        v-bind:isOpen="this.postOpen"
+        :isOpen="this.postOpen"
         @closePost="notOpen"
         @newPost="addPost"
         v-bind:user="this.user"
@@ -41,11 +34,14 @@ import NewPost from '../cards/posts/NewPost.vue';
 
 <script>
 
+import Post from '../cards/posts/Post.vue';
+import NewPost from '../cards/posts/NewPost.vue';
+
 import moment from 'moment'
 
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
+axios.defaults.baseURL = '/api';
 
 
 export default {
@@ -88,7 +84,7 @@ export default {
             })
         }
     },
-    async mounted() {
+    async created() {
         await this.getFeed();
     },
     components: {

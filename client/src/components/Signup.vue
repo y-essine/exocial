@@ -100,7 +100,7 @@ import axios from 'axios';
 
 import { validateRegister } from './validator';
 
-axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
+axios.defaults.baseURL = '/api';
 
 export default {
     name: 'Signup',

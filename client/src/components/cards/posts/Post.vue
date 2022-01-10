@@ -1,13 +1,13 @@
 <script>
 
+import Like from './ui/Like.vue'
+
 import moment from 'moment'
 
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
+axios.defaults.baseURL = '/api';
 
-
-import Like from './ui/Like.vue'
 
 export default {
     props: {

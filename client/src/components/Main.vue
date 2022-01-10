@@ -1,30 +1,23 @@
-<script setup>
-
-import Sidebar from './sidebar/Sidebar.vue'
-import Header from './header/Header.vue'
-
-</script>
 
 <style>
 @import "./bg.scss";
 
-.bg-anim{
+.bg-anim {
     overflow: hidden;
     width: 80vw;
 }
-
 </style>
 
 <template>
     <div class="bg-anim flex">
-        <div v-for="x in 100" class="circle-container" >
+        <div v-for="x in 100" class="circle-container">
             <div class="circle"></div>
         </div>
     </div>
     <div class="md:flex">
         <Sidebar />
-        <div class="px-6 py-4 space-y-3.5 flex-row md:flex-col md:w-full ">
-            <Header />
+        <div class="px-6 py-4 space-y-3.5 flex-row md:flex-col md:w-full">
+            <Header v-bind:user="this.user" />
             <div class="page-container py-3">
                 <router-view />
             </div>
@@ -33,9 +26,14 @@ import Header from './header/Header.vue'
 </template> 
 
 <script >
+
+
+import Sidebar from './sidebar/Sidebar.vue'
+import Header from './header/Header.vue'
+
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
+axios.defaults.baseURL = '/api';
 
 export default {
     components: {
@@ -44,7 +42,7 @@ export default {
     },
     data() {
         return {
-            user: {}
+            user: { _id: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' },
         }
     },
     created() {

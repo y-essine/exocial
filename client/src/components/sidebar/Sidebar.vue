@@ -1,8 +1,3 @@
-<script setup>
-import SidebarLink from './SidebarLink.vue'
-
-</script>
-
 <template >
         <div class="sidebar md:flex flex-col md:flex-row md:min-h-screen md:relative opacity-75">
             <div
@@ -46,7 +41,11 @@ import SidebarLink from './SidebarLink.vue'
             </div>
         </div>
 </template>
+
 <script>
+
+import SidebarLink from './SidebarLink.vue'
+
 
 export default {
     data() {
@@ -64,6 +63,9 @@ export default {
             this.$router.push('/login');
             localStorage.clear();
         }
+    },
+    components: {
+        SidebarLink
     }
 
 }

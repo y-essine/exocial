@@ -16,6 +16,7 @@
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
     "validator": "^13.7.0",
+    "vite-stack": "file:..",
     "vue": "^3.2.23",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"

@@ -1,9 +1,3 @@
-<script setup>
-
-import Post from '../cards/posts/Post.vue';
-
- </script>
-
 <template>
     <div class="flex-none">
         <div class>
@@ -78,9 +72,11 @@ import Post from '../cards/posts/Post.vue';
 
 <script >
 
+import Post from '../cards/posts/Post.vue';
+
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:3000/api' : '/api';
+axios.defaults.baseURL = '/api';
 
 
 export default {
