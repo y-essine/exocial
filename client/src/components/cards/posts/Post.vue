@@ -51,7 +51,7 @@ export default {
 
                 await axios.put('/posts/' + postId + '/like', { userId: userId })
                     .then(res => {
-                        // this.$notify(res.data.message);
+                        //aamel haja
                     }, err => {
                         this.$notify({ type: 'error', title: 'Error!', text: "Trouble in like/dislike..." });
                     });
@@ -75,6 +75,7 @@ export default {
 
     },
     created() {
+        this.currentUser.id = this.currentUser._id;
         this.checkIfLiked();
     },
     components: {
@@ -98,9 +99,11 @@ export default {
             </router-link>
             <div class="w-full">
                 <div class="flex items-center justify-between">
-                    <h2
-                        class="text-lg font-semibold text-t-primary -mt-1 cursor-pointer"
-                    >{{ post.author.firstname + ' ' + post.author.lastname }}</h2>
+                    <router-link :to="'/user/' + post.author.username">
+                        <h2
+                            class="text-lg font-semibold text-t-primary -mt-1 cursor-pointer"
+                        >{{ post.author.firstname + ' ' + post.author.lastname }}</h2>
+                    </router-link>
                     <small
                         class="text-sm text-t-accent cursor-pointer"
                     >{{ fromNow(post.createdAt) }}</small>

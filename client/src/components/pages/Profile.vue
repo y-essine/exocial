@@ -5,7 +5,7 @@
                 class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
             >Details</h1>
             <div
-                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8"
+                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg"
             >
                 <div class="flex flex-col items-center min-w-fit">
                     <h1
@@ -13,7 +13,7 @@
                     >{{ user.username }}</h1>
                     <img
                         :class="{ 'admin': user.isAdmin }"
-                        class="w-32 h-32 rounded-full object-cover shadow"
+                        class="w-32 h-32 rounded-full object-cover shadow-lg"
                         :src="user.avatar"
                         alt="avatar"
                     />

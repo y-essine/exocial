@@ -57,7 +57,9 @@ router.get("/:id", async (req, res) => {
 //get user by username
 router.get("/username/:username", async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.params.username })
+        const user = await (User.findOne({ username: req.params.username })
+            .populate('followers', 'username avatar firstname lastname')
+            .populate('followings', 'username avatar firstname lastname'))
         if (!user)
             return res.status(201).json({ message: 'user not found' });
         const { password, updatedAt, ...other } = user._doc;

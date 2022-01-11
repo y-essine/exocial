@@ -3,9 +3,9 @@
         <div class>
             <h1
                 class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
-            >Details </h1>
+            >Details</h1>
             <div
-                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8"
+                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg"
             >
                 <div class="flex flex-col items-center min-w-fit">
                     <h1
@@ -13,7 +13,7 @@
                     >{{ user.username }}</h1>
                     <img
                         :class="{ 'admin': user.isAdmin }"
-                        class="w-32 h-32 rounded-full object-cover shadow"
+                        class="w-32 h-32 rounded-full object-cover shadow-md"
                         :src="user.avatar"
                         alt="avatar"
                     />
@@ -35,11 +35,17 @@
                     </div>
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
                         <h1
-                            class="font-semibold text-t-secondary hover:text-gray-400 text-md"
+                            class="font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
                         >{{ 'Followers : ' + user.followers.length }}</h1>
                         <h1
-                            class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md"
+                            class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
                         >{{ 'Following : ' + user.followings.length }}</h1>
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        <button
+                            @click="followUser"
+                            class="inline text-lg font-extrabold text-t-secondary px-3 py-1 rounded bg-primary hover:bg-accent shadow-md"
+                        >{{ Text = this.isFollowed ? 'Unfollow' : 'Follow' }}</button>
                     </div>
                 </div>
             </div>
@@ -50,8 +56,8 @@
             >Posts</h1>
             <div class="mt-8">
                 <transition-group name="post-list" tag="ul">
-                    <li v-for="(post,index) in posts" :key="post">
-                        <Post v-bind:post="post"  :index="index" :currentUser="user"/>
+                    <li v-for="(post,index) in posts" :key="post._id">
+                        <Post v-bind:post="post" :index="index" :currentUser="this.currentUser" />
                     </li>
                 </transition-group>
                 <div
@@ -81,6 +87,8 @@ export default {
     name: 'Profile',
     data() {
         return {
+            isFollowed: false,
+            isLocallyFollowed: false,
             loadingPosts: false,
             user: { followers: [], followings: [] },
             posts: {}
@@ -91,6 +99,7 @@ export default {
             await axios.get('/users/username/' + this.$route.params.username)
                 .then(res => {
                     this.user = res.data.user;
+                    this.checkIfFollowed();
                 })
 
 
@@ -107,7 +116,22 @@ export default {
                         this.loadingPosts = false;
                     })
             })
-        }
+        },
+        checkIfFollowed() {
+            this.user.followers.forEach(element => {
+                if (element._id == this.currentUser.id)
+                    this.isFollowed = true;
+            });
+        },
+        async followUser() {
+            let instruction = !this.isFollowed ? '/follow' : '/unfollow'
+            this.isFollowed = !this.isFollowed;
+            console.log(this.currentUser.username + ' ' + instruction + ' ' + this.user.username);
+            await axios.put('/users/' + this.user._id + instruction, { userId: this.currentUser.id })
+                .then(res => {
+                    console.log(res.data);
+                })
+        },
     },
     async mounted() {
         await this.getPosts();

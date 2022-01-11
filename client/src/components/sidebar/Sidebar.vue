@@ -1,5 +1,5 @@
 <template >
-        <div class="sidebar md:flex flex-col md:flex-row md:min-h-screen md:relative opacity-75">
+        <div class="sidebar md:flex flex-col md:flex-row md:min-h-screen md:relative opacity-75 shadow-lg">
             <div
                 class="flex flex-col w-full md:w-64 text-gray-800 bg-white dark-mode:text-gray-300 dark-mode:bg-neutral-900 flex-shrink-0"
                 x-data="{ open: false }"

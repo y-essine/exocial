@@ -31,14 +31,14 @@ const UserSchema = new Schema(
             type: String,
             default: ""
         },
-        followers: {
-            type: Array,
-            default: []
-        },
-        followings: {
-            type: Array,
-            default: []
-        },
+        followers: [{
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+        }],
+        followings: [{
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+        }],
         posts: [{
             type: Schema.Types.ObjectId,
             ref: 'post'
