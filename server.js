@@ -25,9 +25,7 @@ const limiter = new RateLimit({
 
 
 app
-    .use(cors({
-        origin: "https://i.imgur.com",
-    }))
+    .use(cors({ origin: "https://i.imgur.com" }))
     .use(morgan('tiny'))
     .use(bodyParser.json())
     .use(limiter)
