@@ -25,11 +25,20 @@ const limiter = new RateLimit({
 
 
 app
-    .use(cors({ origin: "https://i.imgur.com" }))
+    .use(cors())
     .use(morgan('tiny'))
     .use(bodyParser.json())
     .use(limiter)
     .use(helmet())
+
+//csp
+app.use(function (req, res, next) {
+    res.setHeader(
+        'Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' https://i.imgur.com; frame-src 'self'"
+      );
+    next();
+});
+
 
 mongoose
     .connect(mongoUri)
@@ -38,11 +47,12 @@ mongoose
     })
     .catch((err) => console.log(err));
 
+//api
 app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/posts', postsRoute);
 
-
+//get front
 if (process.env.NODE_ENV == 'production') {
     app.use(express.static('client/dist'));
     app.get('*', (req, res) => {
