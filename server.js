@@ -34,7 +34,7 @@ app
 //csp
 app.use(function (req, res, next) {
     res.setHeader(
-        'Content-Security-Policy', "default-src 'self'; script-src 'self'; img-src 'self' https://i.imgur.com https://w7.pngwing.com/; frame-src 'self'"
+        'Content-Security-Policy', "script-src 'self'; img-src 'self' https://i.imgur.com https://w7.pngwing.com/; frame-src 'self'"
       );
     next();
 });
