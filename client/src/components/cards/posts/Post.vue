@@ -122,7 +122,7 @@ export default {
                             :src="liker.avatar"
                             :style="{ 'z-index': 20 - index }"
                             class="relative inline object-cover w-6 h-6 border-2 border-secondary rounded-full"
-                            alt="{{liker.username}}"
+                            :alt="liker.username"
                         />
                     </div>
                 </div>
