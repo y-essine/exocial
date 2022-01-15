@@ -2,12 +2,8 @@
     <div class="flex justify-between">
         <h1
             class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
-        >Feed </h1>
-        <!-- <button
-            @click="addPost('🌊😒 Newest Post 🌊😒')"
-            class="text-lg font-extrabold text-gray-200 px-3 py-1 rounded bg-green-700/50 hover:bg-green-700"
-        >AddPost
-        </button> -->
+        >Feed</h1>
+        
         <button
             @click="notOpen"
             :class="{ 'bg-green-700/50 hover:bg-green-700': !this.postOpen, 'bg-red-500/50 hover:bg-red-700/50 ': this.postOpen }"
@@ -24,9 +20,10 @@
 
     <transition-group name="post-list" tag="ul">
         <li v-for="(post,index) in feed" :key="post._id">
-            <Post v-bind:post="post" :index="index" :currentUser="user"/>
+            <Post v-bind:post="post" :index="index" :currentUser="user" />
         </li>
     </transition-group>
+
     <div v-if="loadingFeed" class="text-red-500 opacity-75 flex justify-center mt-56">
         <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
     </div>
