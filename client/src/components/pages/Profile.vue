@@ -5,7 +5,7 @@
                 class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
             >Details</h1>
             <div
-                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg"
+                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg grid-cols-2 divide-x divide-gray-500"
             >
                 <div class="flex flex-col items-center min-w-fit">
                     <h1
@@ -17,6 +17,11 @@
                         :src="user.avatar"
                         alt="avatar"
                     />
+                    <div v-if="user.isAdmin" class="flex justify-center mt-4 ">
+                        <h1
+                            class="admin inline text-lg font-extrabold text-red-500 px-3 py-1 rounded bg-accent"
+                        >Admin</h1>
+                    </div>
                 </div>
                 <div class="flex flex-col px-8 py-10 w-full">
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
@@ -33,11 +38,7 @@
                             <h1 class="text-lg font-semibold text-t-secondary">{{ user.email }}</h1>
                         </div>
                     </div>
-                    <div v-if="user.isAdmin" class="flex justify-center mt-4 ">
-                        <h1
-                            class="admin inline text-lg font-extrabold text-red-500 px-3 py-1 rounded bg-accent"
-                        >Admin</h1>
-                    </div>
+                    
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
                         <h1
                             class="font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
