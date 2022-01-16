@@ -1,4 +1,4 @@
-# Vite (Vue3) Social Network APP
+# Vite (Vue3) Social Network APP -- _CURRENTLY IN DEVELOPMENT_
 Demo: https://vitesocial.herokuapp.com/
 - [![CodeFactor](https://www.codefactor.io/repository/github/y-essine/vite-stack/badge)](https://www.codefactor.io/repository/github/y-essine/vite-stack)
 ## Description
