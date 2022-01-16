@@ -3,7 +3,7 @@
         <h1
             class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
         >Feed</h1>
-        
+
         <button
             @click="notOpen"
             :class="{ 'bg-green-700/50 hover:bg-green-700': !this.postOpen, 'bg-red-500/50 hover:bg-red-700/50 ': this.postOpen }"
@@ -43,11 +43,11 @@ axios.defaults.baseURL = '/api';
 
 export default {
     name: 'Home',
+    props: ['isUserLoaded', 'user'],
     data() {
         return {
             postOpen: false,
             loadingFeed: false,
-            user: {},
             feed: [],
         }
     },
@@ -64,25 +64,25 @@ export default {
         notOpen() {
             this.postOpen = !this.postOpen;
         },
-        async getUser() {
-            await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
-                .then(res => {
-                    this.user = res.data.user;
-                })
-        },
         async getFeed() {
             this.loadingFeed = true;
-            await this.getUser().then(async () => {
-                await axios.post('/posts/feed/all', { userId: this.user._id })
-                    .then(res => {
-                        this.feed = res.data;
-                        this.loadingFeed = false;
-                    })
-            })
+            await axios.post('/posts/feed/all', { userId: this.user._id })
+                .then(res => {
+                    this.feed = res.data;
+                    this.loadingFeed = false;
+                })
+
+        }
+    },
+    watch: {
+        isUserLoaded: async function (newer, old) {
+            if (newer)
+                await this.getFeed()
         }
     },
     async created() {
-        await this.getFeed();
+        if(this.isUserLoaded)
+            await this.getFeed()
     },
     components: {
         Post,

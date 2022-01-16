@@ -10,11 +10,11 @@
                 <div class="flex flex-col items-center min-w-fit">
                     <h1
                         class="mb-2 font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
-                    >{{ user.username }}</h1>
+                    >{{ profileUser.username }}</h1>
                     <img
-                        :class="{ 'admin': user.isAdmin }"
+                        :class="{ 'admin': profileUser.isAdmin }"
                         class="w-32 h-32 rounded-full object-cover shadow-md"
-                        :src="user.avatar"
+                        :src="profileUser.avatar"
                         alt="avatar"
                     />
                 </div>
@@ -23,23 +23,25 @@
                         <div class="justify-center">
                             <h1
                                 class="inline font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
-                            >{{ user.firstname }}</h1>
+                            >{{ profileUser.firstname }}</h1>
                             <h1
                                 class="inline font-extrabold text-t-accent hover:text-gray-500/70 text-xl uppercase"
-                            >{{ ' ' + user.lastname }}</h1>
+                            >{{ ' ' + profileUser.lastname }}</h1>
                         </div>
 
                         <div>
-                            <h1 class="text-lg font-semibold text-t-secondary">{{ user.email }}</h1>
+                            <h1
+                                class="text-lg font-semibold text-t-secondary"
+                            >{{ profileUser.email }}</h1>
                         </div>
                     </div>
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
                         <h1
                             class="font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
-                        >{{ 'Followers : ' + user.followers.length }}</h1>
+                        >{{ 'Followers : ' + profileUser.followers.length }}</h1>
                         <h1
                             class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
-                        >{{ 'Following : ' + user.followings.length }}</h1>
+                        >{{ 'Following : ' + profileUser.followings.length }}</h1>
                     </div>
                     <div class="flex justify-center mt-4">
                         <button
@@ -57,7 +59,7 @@
             <div class="mt-8">
                 <transition-group name="post-list" tag="ul">
                     <li v-for="(post,index) in posts" :key="post._id">
-                        <Post v-bind:post="post" :index="index" :currentUser="this.currentUser" />
+                        <Post v-bind:post="post" :index="index" :currentUser="this.user" />
                     </li>
                 </transition-group>
                 <div
@@ -75,8 +77,6 @@
 
 import Post from '../cards/posts/Post.vue';
 
-import { mapState } from 'vuex';
-
 
 import axios from 'axios';
 
@@ -85,12 +85,13 @@ axios.defaults.baseURL = '/api';
 
 export default {
     name: 'Profile',
+    props: ['isUserLoaded', 'user'],
     data() {
         return {
             isFollowed: false,
             isLocallyFollowed: false,
             loadingPosts: false,
-            user: { followers: [], followings: [] },
+            profileUser: { followers: [], followings: [] },
             posts: {}
         }
     },
@@ -98,8 +99,8 @@ export default {
         async getUser() {
             await axios.get('/users/username/' + this.$route.params.username)
                 .then(res => {
-                    this.user = res.data.user;
-                    this.checkIfFollowed();
+                    this.profileUser = res.data.user;
+                    this.checkIfFollowed(this.profileUser);
                 })
 
 
@@ -108,38 +109,42 @@ export default {
         async getPosts() {
             this.loadingPosts = true;
             await this.getUser().then(async () => {
-                if (this.currentUser.username == this.$route.params.username)
+                if (this.user.username == this.$route.params.username)
                     return this.$router.push('/profile')
-                await axios.get('/posts/' + this.user._id + '/posts')
+                await axios.get('/posts/' + this.profileUser._id + '/posts')
                     .then(res => {
                         this.posts = res.data;
                         this.loadingPosts = false;
                     })
             })
         },
-        checkIfFollowed() {
-            this.user.followers.forEach(element => {
-                if (element._id == this.currentUser.id)
+        checkIfFollowed(user) {
+            user.followers.forEach(element => {
+                if (element._id == this.user._id) {
                     this.isFollowed = true;
+                }
+
             });
         },
         async followUser() {
             let instruction = !this.isFollowed ? '/follow' : '/unfollow'
             this.isFollowed = !this.isFollowed;
-            console.log(this.currentUser.username + ' ' + instruction + ' ' + this.user.username);
-            await axios.put('/users/' + this.user._id + instruction, { userId: this.currentUser.id })
+            console.log(this.user.username + ' ' + instruction + ' ' + this.profileUser.username);
+            await axios.put('/users/' + this.profileUser._id + instruction, { userId: this.user.id })
                 .then(res => {
                     console.log(res.data);
                 })
         },
     },
-    async mounted() {
-        await this.getPosts();
+    watch: {
+        isUserLoaded: async function (newValue) {
+            if (newValue)
+                await this.getPosts()
+        }
     },
-    computed: {
-        ...mapState({
-            currentUser: state => state.user
-        })
+    async created() {
+        if(this.isUserLoaded)
+            await this.getPosts()
     },
     components: {
         Post

@@ -19,7 +19,7 @@
         <div class="px-6 py-4 space-y-3.5 flex-row md:flex-col md:w-full">
             <Header v-bind:user="this.user" />
             <div class="page-container py-3">
-                <router-view />
+                <router-view :isUserLoaded="this.isUserLoaded" v-bind:user="this.user"/>
             </div>
         </div>
     </div>
@@ -42,7 +42,8 @@ export default {
     },
     data() {
         return {
-            user: { _id: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' },
+            isUserLoaded : false,
+            user: { _id: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' }
         }
     },
     created() {
@@ -52,10 +53,11 @@ export default {
             this.$router.push('/login');
         }
     },
-    mounted() {
-        axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
+    async mounted() {
+        await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
             .then(res => {
                 this.user = res.data.user;
+                this.isUserLoaded = true;
                 this.$store.dispatch('saveUser', this.user)
             })
     },
