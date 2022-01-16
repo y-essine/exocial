@@ -22,7 +22,6 @@
                 <router-view />
             </div>
         </div>
-    <Chatbox />
     </div>
 </template> 
 
@@ -31,7 +30,6 @@
 
 import Sidebar from './sidebar/Sidebar.vue'
 import Header from './header/Header.vue'
-import Chatbox from './chat/box/Chatbox.vue'
 
 import axios from 'axios';
 
@@ -41,7 +39,6 @@ export default {
     components: {
         Header,
         Sidebar,
-        Chatbox,
     },
     data() {
         return {
