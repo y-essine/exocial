@@ -71,7 +71,6 @@
                         viewBox="0 0 1 1"
                         primaryColor="#303030"
                         secondaryColor="#343434"
-                        speed="1"
                     >
                         <circle cx="50%" cy="50%" r="1" />
                     </content-loader>
