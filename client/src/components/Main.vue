@@ -57,6 +57,7 @@ export default {
         await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
             .then(res => {
                 this.user = res.data.user;
+                this.user.myFollowings = this.user.followings.length;
                 this.isUserLoaded = true;
                 this.$store.dispatch('saveUser', this.user)
             })

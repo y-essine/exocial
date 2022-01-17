@@ -97,7 +97,7 @@ export default {
                     alt="avatar"
                 />
             </router-link>
-            <div class="w-full">
+            <div class="w-full 2xs:ml-1">
                 <div class="flex items-center justify-between">
                     <router-link :to="'/user/' + post.author.username">
                         <h2

@@ -36,7 +36,7 @@
                     <SidebarLink to="/" icon="home" @click="notOpen">Home</SidebarLink>
                     <SidebarLink to="/profile" icon="user" @click="notOpen">Profile</SidebarLink>
                     <SidebarLink to="/settings" icon="cog" @click="notOpen">Settings</SidebarLink>
-                    <SidebarLink to="./" icon="sign-out-alt" @click="logout">Logout</SidebarLink>
+                    <SidebarLink to="" icon="sign-out-alt" @click="logout">Logout</SidebarLink>
                 </nav>
             </div>
         </div>

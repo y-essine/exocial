@@ -46,7 +46,7 @@
                         >{{ 'Followers : ' + user.followers.length }}</h1>
                         <h1
                             class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
-                        >{{ 'Following : ' + user.followings.length }}</h1>
+                        >{{ 'Following : ' + user.myFollowings }}</h1>
                     </div>
                 </div>
             </div>
@@ -173,7 +173,7 @@ export default {
             await axios.get('/posts/' + this.user._id + '/posts')
                 .then(res => {
                     this.posts = res.data;
-                    this.isPostsLoaded = false;
+                    this.isPostsLoaded = true;
                 })
         }
     },

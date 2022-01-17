@@ -224,10 +224,12 @@ export default {
             if (this.isFollowed) {
                 instruction = '/unfollow';
                 this.profileFollowers--;
+                this.user.myFollowings--;
             }
             else {
                 instruction = '/follow';
                 this.profileFollowers++;
+                this.user.myFollowings++;
             }
             this.isFollowed = !this.isFollowed;
 
