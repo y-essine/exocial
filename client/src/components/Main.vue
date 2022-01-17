@@ -17,9 +17,9 @@
     <div class="md:flex">
         <Sidebar />
         <div class="px-6 py-4 space-y-3.5 flex-row md:flex-col md:w-full">
-            <Header v-bind:user="this.user" />
+            <Header :isUserLoaded="this.isUserLoaded" v-bind:user="this.user" />
             <div class="page-container py-3">
-                <router-view :isUserLoaded="this.isUserLoaded" v-bind:user="this.user"/>
+                <router-view :isUserLoaded="this.isUserLoaded" v-bind:user="this.user" />
             </div>
         </div>
     </div>
@@ -28,8 +28,8 @@
 <script >
 
 
-import Sidebar from './sidebar/Sidebar.vue'
-import Header from './header/Header.vue'
+import Sidebar from './sidebar/Sidebar.vue';
+import Header from './header/Header.vue';
 
 import axios from 'axios';
 
@@ -42,8 +42,8 @@ export default {
     },
     data() {
         return {
-            isUserLoaded : false,
-            user: { _id: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' }
+            isUserLoaded: false,
+            user: { _id: 'Loading...', username: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' }
         }
     },
     created() {

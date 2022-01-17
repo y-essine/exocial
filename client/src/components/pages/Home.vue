@@ -6,13 +6,13 @@
 
         <button
             @click="notOpen"
-            :class="{ 'bg-green-700/50 hover:bg-green-700': !this.postOpen, 'bg-red-500/50 hover:bg-red-700/50 ': this.postOpen }"
+            :class="{ 'bg-green-700/50 hover:bg-green-700': !isPostOpen, 'bg-red-500/50 hover:bg-red-700/50 ': isPostOpen }"
             class="text-lg font-extrabold text-gray-200 px-3 py-1 rounded"
-        >{{ Text = this.postOpen ? 'Cancel' : 'Post' }}</button>
+        >{{ Text = isPostOpen ? 'Cancel' : 'Post' }}</button>
     </div>
 
     <NewPost
-        :isOpen="this.postOpen"
+        :isOpen="isPostOpen"
         @closePost="notOpen"
         @newPost="addPost"
         v-bind:user="this.user"
@@ -24,7 +24,7 @@
         </li>
     </transition-group>
 
-    <div v-if="loadingFeed" class="text-red-500 opacity-75 flex justify-center mt-56">
+    <div v-if="!isFeedLoaded" class="text-red-500 opacity-75 flex justify-center mt-56">
         <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
     </div>
 </template>
@@ -46,8 +46,8 @@ export default {
     props: ['isUserLoaded', 'user'],
     data() {
         return {
-            postOpen: false,
-            loadingFeed: false,
+            isPostOpen: false,
+            isFeedLoaded: false,
             feed: [],
         }
     },
@@ -62,14 +62,13 @@ export default {
             this.feed.unshift(post)
         },
         notOpen() {
-            this.postOpen = !this.postOpen;
+            this.isPostOpen = !this.isPostOpen;
         },
         async getFeed() {
-            this.loadingFeed = true;
             await axios.post('/posts/feed/all', { userId: this.user._id })
                 .then(res => {
                     this.feed = res.data;
-                    this.loadingFeed = false;
+                    this.isFeedLoaded = true;
                 })
 
         }

@@ -15,9 +15,9 @@
                     <h1 class="ml-1 text-t-secondary font-semibold text-sm">{{ this.$route.name }}</h1>
                 </div>
             </div>
-            <div class="flex items-center columns-2">
+            <div v-if="this.isUserLoaded" class="flex items-center columns-2">
                 <div class="col">
-                    <router-link to="/profile" class=" min-w-fit">
+                    <router-link to="/profile" class="min-w-fit">
                         <img
                             :class="{ 'admin': user.isAdmin }"
                             class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left"
@@ -41,15 +41,64 @@
                     >{{ user.email }}</h1>
                 </div>
             </div>
+            <div v-else class="flex items-center columns-2">
+                <div class="col">
+                    <router-link to="/profile" class="min-w-fit">
+                        <content-loader
+                            class="w-12 h-12 rounded-full object-cover mr-4 shadow float-left"
+                            viewBox="0 0 1 1"
+                            primaryColor="#303030"
+                            secondaryColor="#343434"
+                        >
+                            <circle cx="50%" cy="50%" r="1" />
+                        </content-loader>
+                    </router-link>
+                </div>
+
+                <div class="col">
+                    <div class="flex justify-between">
+                        <content-loader
+                            class="h-full w-20"
+                            viewBox="0 0 80 18"
+                            primaryColor="#303030"
+                            secondaryColor="#343434"
+                        >
+                            <rect x="0" y="0" rx="4" ry="4" width="80" height="18" />
+                        </content-loader>
+                        <content-loader
+                            class="ml-2 h-full w-20 2xs:hidden xs:block"
+                            viewBox="0 0 80 18"
+                            primaryColor="#303030"
+                            secondaryColor="#343434"
+                        >
+                            <rect x="0" y="0" rx="4" ry="4" width="80" height="18" />
+                        </content-loader>
+                    </div>
+                    <content-loader
+                            class="mt-2 h-full w-40 2xs:hidden xs:block"
+                            viewBox="0 0 160 18"
+                            primaryColor="#303030"
+                            secondaryColor="#343434"
+                        >
+                            <rect x="0" y="0" rx="4" ry="4" width="160" height="18" />
+                        </content-loader>
+                </div>
+            </div>
         </div>
     </section>
 </template>
 
 <script>
 
+
+import { ContentLoader } from 'vue-content-loader';
+
 export default {
     name: 'Header',
-    props: ['user']
+    props: ['isUserLoaded', 'user'],
+    components: {
+        ContentLoader
+    }
 }
 </script>
 
