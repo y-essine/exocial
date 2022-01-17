@@ -4,13 +4,15 @@
             <h1
                 class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
             >Details</h1>
-            <div
+
+            <div v-if="this.isLoaded"
                 class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg"
             >
                 <div class="flex flex-col items-center min-w-fit">
                     <h1
                         class="mb-2 font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
                     >{{ profileUser.username }}</h1>
+
                     <img
                         :class="{ 'admin': profileUser.isAdmin }"
                         class="w-32 h-32 rounded-full object-cover shadow-md"
@@ -18,7 +20,7 @@
                         alt="avatar"
                     />
                 </div>
-                <div class="flex flex-col px-8 py-10 w-full">
+                <div class="flex flex-col px-8 py-10 pt-6 w-full">
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
                         <div class="justify-center">
                             <h1
@@ -51,6 +53,110 @@
                     </div>
                 </div>
             </div>
+            <div v-else
+                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg"
+            >
+                <div class="flex flex-col items-center min-w-fit">
+                    <content-loader
+                        class="mb-[0.9rem] h-full w-24"
+                        viewBox="0 0 96 22"
+                        primaryColor="#303030"
+                        secondaryColor="#343434"
+                    >
+                        <rect x="0" y="0" rx="4" ry="4" width="96" height="22" />
+                    </content-loader>
+
+                    <content-loader
+                        class="w-32 h-32 rounded-full object-cover shadow-md"
+                        viewBox="0 0 1 1"
+                        primaryColor="#303030"
+                        secondaryColor="#343434"
+                        speed="1"
+                    >
+                        <circle cx="50%" cy="50%" r="1" />
+                    </content-loader>
+                </div>
+                <div class="flex flex-col px-8 py-10 pt-6 w-full">
+                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
+                        <div class="justify-center">
+                            <!-- <h1
+                                class="inline font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
+                            >{{ profileUser.firstname }}</h1>-->
+                            <content-loader
+                                class="inline mb-1 h-full w-24"
+                                viewBox="0 0 96 22"
+                                primaryColor="#303030"
+                                secondaryColor="#343434"
+                            >
+                                <rect x="0" y="0" rx="4" ry="4" width="96" height="22" />
+                            </content-loader>
+                            <content-loader
+                                class="inline ml-2 mb-1 h-full w-24"
+                                viewBox="0 0 96 22"
+                                primaryColor="#303030"
+                                secondaryColor="#343434"
+                            >
+                                <rect x="0" y="0" rx="4" ry="4" width="96" height="22" />
+                            </content-loader>
+                            <!-- <h1
+                                class="inline font-extrabold text-t-accent hover:text-gray-500/70 text-xl uppercase"
+                            >{{ ' ' + profileUser.lastname }}</h1>-->
+                        </div>
+
+                        <div>
+                            <!-- <h1
+                                class="text-lg font-semibold text-t-secondary"
+                            >{{ profileUser.email }}</h1> -->
+                            <content-loader
+                                class="inline ml-2 mb-1 h-full w-56"
+                                viewBox="0 0 224 22"
+                                primaryColor="#303030"
+                                secondaryColor="#343434"
+                            >
+                                <rect x="0" y="0" rx="4" ry="4" width="224" height="22" />
+                            </content-loader>
+                        </div>
+                    </div>
+                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
+                        <!-- <h1
+                            class="font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
+                        >{{ 'Followers : ' + profileUser.followers.length }}</h1> -->
+                        <content-loader
+                                class="inline ml-2 mb-1 h-full w-24"
+                                viewBox="0 0 96 22"
+                                primaryColor="#303030"
+                                secondaryColor="#343434"
+                            >
+                                <rect x="0" y="0" rx="4" ry="4" width="96" height="22" />
+                            </content-loader>
+                            <content-loader
+                                class="inline ml-2 mb-1 h-full w-24"
+                                viewBox="0 0 96 22"
+                                primaryColor="#303030"
+                                secondaryColor="#343434"
+                            >
+                                <rect x="0" y="0" rx="4" ry="4" width="96" height="22" />
+                            </content-loader>
+                        <!-- <h1
+                            class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
+                        >{{ 'Following : ' + profileUser.followings.length }}</h1> -->
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        <!-- <button
+                            @click="followUser"
+                            class="inline text-lg font-extrabold text-t-secondary px-3 py-1 rounded bg-primary hover:bg-accent shadow-md"
+                        >{{ Text = this.isFollowed ? 'Unfollow' : 'Follow' }}</button> -->
+                        <content-loader
+                                class="inline ml-2 mb-1 h-full w-24"
+                                viewBox="0 0 96 36"
+                                primaryColor="#303030"
+                                secondaryColor="#343434"
+                            >
+                                <rect x="0" y="0" rx="4" ry="4" width="96" height="36" />
+                            </content-loader>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="mt-12">
             <h1
@@ -75,8 +181,9 @@
 
 <script >
 
-import Post from '../cards/posts/Post.vue';
+import { ContentLoader } from 'vue-content-loader';
 
+import Post from '../cards/posts/Post.vue';
 
 import axios from 'axios';
 
@@ -90,6 +197,7 @@ export default {
         return {
             isFollowed: false,
             isLocallyFollowed: false,
+            isLoaded: false,
             loadingPosts: false,
             profileUser: { followers: [], followings: [] },
             posts: {}
@@ -109,6 +217,7 @@ export default {
         async getPosts() {
             this.loadingPosts = true;
             await this.getUser().then(async () => {
+                this.isLoaded = true;
                 if (this.user.username == this.$route.params.username)
                     return this.$router.push('/profile')
                 await axios.get('/posts/' + this.profileUser._id + '/posts')
@@ -129,7 +238,6 @@ export default {
         async followUser() {
             let instruction = !this.isFollowed ? '/follow' : '/unfollow'
             this.isFollowed = !this.isFollowed;
-            console.log(this.user.username + ' ' + instruction + ' ' + this.profileUser.username);
             await axios.put('/users/' + this.profileUser._id + instruction, { userId: this.user.id })
                 .then(res => {
                     console.log(res.data);
@@ -143,11 +251,12 @@ export default {
         }
     },
     async created() {
-        if(this.isUserLoaded)
+        if (this.isUserLoaded)
             await this.getPosts()
     },
     components: {
-        Post
+        Post,
+        ContentLoader
     }
 }
 </script>

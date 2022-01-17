@@ -18,8 +18,8 @@
     "validator": "^13.7.0",
     "vite-stack": "file:..",
     "vue": "^3.2.23",
+    "vue-content-loader": "^2.0.1",
     "vue-router": "^4.0.12",
-    "vue3-shimmer": "^1.0.2",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
