@@ -25,6 +25,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col px-8 py-10 w-full">
+                    
+
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
                         <div class="justify-center">
                             <h1
@@ -47,6 +49,13 @@
                         <h1
                             class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
                         >{{ 'Following : ' + user.myFollowings }}</h1>
+                    </div>
+                    <div class="flex sm:flex-row 2xs:flex-col items-center">
+                        <button
+                            @click="notEdit"
+                            :class="{ 'bg-red-500/50 hover:bg-red-700/50': !isEdit, 'bg-slate-700/50 hover:bg-slate-800/50  ': isEdit }"
+                            class="2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                        >{{ Text = isEdit ? 'Cancel' : 'Edit' }}</button>
                     </div>
                 </div>
             </div>
@@ -132,7 +141,7 @@
             >Posts</h1>
             <div class="mt-8">
                 <transition-group name="post-list" tag="ul">
-                    <li v-for="(post,index) in posts" :key="post">
+                    <li v-for="(post, index) in posts" :key="post">
                         <Post v-bind:post="post" :index="index" :currentUser="user" />
                     </li>
                 </transition-group>
@@ -161,9 +170,10 @@ axios.defaults.baseURL = '/api';
 
 export default {
     name: 'Profile',
-    props: ['isUserLoaded','user'],
+    props: ['isUserLoaded', 'user'],
     data() {
         return {
+            isEdit: false,
             isPostsLoaded: false,
             posts: {}
         }
@@ -175,6 +185,9 @@ export default {
                     this.posts = res.data;
                     this.isPostsLoaded = true;
                 })
+        },
+        notEdit() {
+            this.isEdit = !this.isEdit
         }
     },
     watch: {

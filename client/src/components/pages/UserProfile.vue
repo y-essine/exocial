@@ -151,7 +151,7 @@
                     </li>
                 </transition-group>
                 <div
-                    v-if="!isPostsLoaded"
+                    v-if="!this.isPostsLoaded"
                     class="text-red-500 opacity-75 flex justify-center mt-32"
                 >
                     <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
