@@ -25,10 +25,8 @@
                     </div>
                 </div>
                 <div class="flex flex-col px-8 py-10 w-full">
-                    
-
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
-                        <div class="justify-center">
+                        <div v-if="!this.isEdit" class="justify-center">
                             <h1
                                 class="inline font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
                             >{{ user.firstname }}</h1>
@@ -36,9 +34,32 @@
                                 class="inline font-extrabold text-t-accent hover:text-gray-500/70 text-xl uppercase"
                             >{{ ' ' + user.lastname }}</h1>
                         </div>
+                        <div v-else class="flex justify-center">
+                            <input
+                                type="firstname"
+                                name="firstname"
+                                placeholder="Firstname"
+                                class="inline max-w-[9.5rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
+                                v-model="firstname"
+                            />
+                            <input
+                                type="lastname"
+                                name="lastname"
+                                placeholder="Lastname"
+                                class="inline ml-4 max-w-[9.5rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
+                                v-model="lastname"
+                            />
+                        </div>
 
                         <div>
-                            <h1 class="text-lg font-semibold text-t-secondary">{{ user.email }}</h1>
+                            <h1 v-if="!this.isEdit" class="text-lg font-semibold text-t-secondary">{{ user.email }}</h1>
+                            <input v-else
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                class="2xs:mt-2 sm:mt-0 inline ml-4 max-w-[16rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
+                                v-model="email"
+                            />
                         </div>
                     </div>
 
@@ -50,12 +71,21 @@
                             class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
                         >{{ 'Following : ' + user.myFollowings }}</h1>
                     </div>
-                    <div class="flex sm:flex-row 2xs:flex-col items-center">
+                    <div v-if="!this.isEdit" class="flex sm:flex-row 2xs:flex-col items-center">
                         <button
                             @click="notEdit"
-                            :class="{ 'bg-red-500/50 hover:bg-red-700/50': !isEdit, 'bg-slate-700/50 hover:bg-slate-800/50  ': isEdit }"
-                            class="2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
-                        >{{ Text = isEdit ? 'Cancel' : 'Edit' }}</button>
+                            class="bg-red-500/50 hover:bg-red-700/50 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                        >Edit</button>
+                    </div>
+                    <div v-else class="flex sm:flex-row 2xs:flex-col items-center">
+                        <button
+                            @click="saveEdit"
+                            class="bg-green-500/50 hover:bg-green-700/50' 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                        >Save</button>
+                        <button
+                            @click="notEdit"
+                            class="bg-gray-700/50 hover:bg-gray-600/50 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                        >Cancel</button>
                     </div>
                 </div>
             </div>
@@ -175,7 +205,10 @@ export default {
         return {
             isEdit: false,
             isPostsLoaded: false,
-            posts: {}
+            posts: {},
+            firstname: "",
+            lastname: "",
+            email: "",
         }
     },
     methods: {
@@ -188,6 +221,14 @@ export default {
         },
         notEdit() {
             this.isEdit = !this.isEdit
+            if (this.isEdit) {
+                this.firstname = this.user.firstname;
+                this.lastname = this.user.lastname;
+                this.email = this.user.email;
+            }
+        },
+        async saveEdit() {
+            this.$notify(`New first last ; email : \n${this.firstname} ${this.lastname} ; ${this.email}`);
         }
     },
     watch: {

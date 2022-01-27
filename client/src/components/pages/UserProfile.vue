@@ -207,7 +207,7 @@ export default {
                 await axios.get('/posts/' + this.profileUser._id + '/posts')
                     .then(res => {
                         this.posts = res.data;
-                        this.loadingPosts = true;
+                        this.isPostsLoaded = true;
                     })
             })
         },
