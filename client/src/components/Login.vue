@@ -104,6 +104,7 @@ export default {
 
                     this.$notify({ type: 'success', title: 'Sucess!', text: 'User logged in.' });
                     localStorage.setItem('auth_token', res.data.token);
+                    this.$store.authToken = res.data.token
                     this.$router.push('/');
                     return;
 

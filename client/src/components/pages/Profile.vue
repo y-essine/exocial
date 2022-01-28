@@ -39,26 +39,30 @@
                                 type="firstname"
                                 name="firstname"
                                 placeholder="Firstname"
-                                class="inline max-w-[9.5rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
-                                v-model="firstname"
+                                class="inline max-w-[9.5rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase text-right"
+                                v-model="form.firstname"
                             />
                             <input
                                 type="lastname"
                                 name="lastname"
                                 placeholder="Lastname"
                                 class="inline ml-4 max-w-[9.5rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
-                                v-model="lastname"
+                                v-model="form.lastname"
                             />
                         </div>
 
                         <div>
-                            <h1 v-if="!this.isEdit" class="text-lg font-semibold text-t-secondary">{{ user.email }}</h1>
-                            <input v-else
+                            <h1
+                                v-if="!this.isEdit"
+                                class="text-lg font-semibold text-t-secondary"
+                            >{{ user.email }}</h1>
+                            <input
+                                v-else
                                 type="email"
                                 name="email"
                                 placeholder="Email"
                                 class="2xs:mt-2 sm:mt-0 inline ml-4 max-w-[16rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
-                                v-model="email"
+                                v-model="form.email"
                             />
                         </div>
                     </div>
@@ -195,6 +199,8 @@ import Post from '../cards/posts/Post.vue';
 
 import axios from 'axios';
 
+import { validateProfileEdit } from '../validator';
+
 axios.defaults.baseURL = '/api';
 
 
@@ -206,9 +212,11 @@ export default {
             isEdit: false,
             isPostsLoaded: false,
             posts: {},
-            firstname: "",
-            lastname: "",
-            email: "",
+            form: {
+                firstname: "",
+                lastname: "",
+                email: ""
+            }
         }
     },
     methods: {
@@ -222,13 +230,16 @@ export default {
         notEdit() {
             this.isEdit = !this.isEdit
             if (this.isEdit) {
-                this.firstname = this.user.firstname;
-                this.lastname = this.user.lastname;
-                this.email = this.user.email;
+                this.form.firstname = this.user.firstname;
+                this.form.lastname = this.user.lastname;
+                this.form.email = this.user.email;
             }
         },
         async saveEdit() {
-            this.$notify(`New first last ; email : \n${this.firstname} ${this.lastname} ; ${this.email}`);
+            if (!validateProfileEdit(this.form))
+                return;
+            this.$notify(`New first last ; email : \n${this.form.firstname} ${this.form.lastname} ; ${this.form.email}`);
+            await axios.put('/users/' + this.user._id, { userId: this.user._id, pa })
         }
     },
     watch: {

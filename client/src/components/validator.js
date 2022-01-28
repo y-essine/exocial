@@ -8,27 +8,27 @@ function notifyError(msg) {
 }
 
 
+function isEmpty(form) {
+    return (form.firstname == '' || form.lastname == '' || form.username == '' || form.password == '' || form.email == '')
+}
+
+function isEmail(form) {
+    return validator.isEmail(form.email)
+}
+
+function isNamesValid(form) {
+    return (validator.isAlpha(form.firstname) && validator.isAlpha(form.lastname) && validator.isLength(form.firstname, { min: 3, max: 20 }) &&validator.isLength(form.lastname, { min: 3, max: 20 }))
+}
+
+function isUsernameValid(form) {
+    return (validator.isLength(form.username, { min: 4, max: 20 }) && validator.isAlphanumeric(form.username))
+}
+
+function isPasswordValid(form) {
+    return validator.isLength(form.password, { min: 8, max: 20 })
+}
 
 const validateRegister = (form) => {
-    function isEmpty(form) {
-        return (form.firstname == '' || form.lastname == '' || form.username == '' || form.password == '' || form.email == '')
-    }
-
-    function isEmail(form) {
-        return validator.isEmail(form.email)
-    }
-
-    function isNamesValid(form) {
-        return (validator.isAlpha(form.firstname) && validator.isAlpha(form.lastname) && validator.isLength(form.username, { min: 3, max: 20 }) && validator.isLength(form.lastname, { min: 3, max: 20 }))
-    }
-
-    function isUsernameValid(form) {
-        return (validator.isLength(form.username, { min: 4, max: 20 }) && validator.isAlphanumeric(form.username))
-    }
-
-    function isPasswordValid(form) {
-        return validator.isLength(form.password, { min: 8, max: 20 })
-    }
     if (isEmpty(form)) {
         notifyError("Please make sure to fill up the forms!");
         return false;
@@ -56,6 +56,25 @@ const validateRegister = (form) => {
     return true;
 }
 
+const validateProfileEdit = (form) => {
+    if (isEmpty(form)) {
+        notifyError("Please make sure to fill up the forms!");
+        return false;
+    }
+
+    if (!isNamesValid(form)) {
+        notifyError("Please type valid names ( Min: 3 letters, no numbers / spaces ) ");
+        return false;
+    }
+
+    if (!isEmail(form)) {
+        notifyError("Make sure you typed a valid email");
+        return false;
+    }
+
+    return true;
+}
 
 
-export { validateRegister };
+
+export { validateRegister, validateProfileEdit };

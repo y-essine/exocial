@@ -48,7 +48,7 @@ export default {
     },
     created() {
         //user not auth'd
-        if (localStorage.getItem('auth_token') === null) {
+        if (!localStorage.getItem('auth_token')) {
             this.$notify({ type: 'error', title: 'No login!', text: "Please log in first." });
             this.$router.push('/login');
         }
