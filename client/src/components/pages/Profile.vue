@@ -76,6 +76,10 @@
                         >{{ 'Following : ' + user.myFollowings }}</h1>
                     </div>
                     <div v-if="!this.isEdit" class="flex sm:flex-row 2xs:flex-col items-center">
+                        <h3
+                            v-if="user.bio"
+                            class="text-t-secondary 2xs:mt-2 font-semibold italic sm:ml-auto"
+                        >{{ user.bio }}</h3>
                         <button
                             @click="notEdit"
                             class="bg-red-500/50 hover:bg-red-700/50 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
@@ -236,10 +240,22 @@ export default {
             }
         },
         async saveEdit() {
+            console.log('doing it now')
             if (!validateProfileEdit(this.form))
                 return;
-            this.$notify(`New first last ; email : \n${this.form.firstname} ${this.form.lastname} ; ${this.form.email}`);
-            await axios.put('/users/' + this.user._id, { userId: this.user._id, pa })
+            await axios.put('/users/' + this.user._id + '/edit', {
+                firstname: this.form.firstname,
+                lastname: this.form.lastname,
+                email: this.form.email,
+                token: localStorage.getItem('authToken')
+            }).then(res => {
+                if(res.status == 200) 
+                    this.$notify({ type: 'success', text: 'Successfully edited profile.' })
+                else
+                    console.log(res.data)
+            });
+
+            this.notEdit();
         }
     },
     watch: {

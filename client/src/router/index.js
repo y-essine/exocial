@@ -40,7 +40,7 @@ const routes = [
                 path: '/user/:username',
                 name: 'User',
                 component: () => import('/src/components/pages/UserProfile.vue')
-            },
+            }
         ]
     },
     {
@@ -54,6 +54,8 @@ const routes = [
         component: Signup,
     }
 ]
+
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -108,6 +110,5 @@ router.beforeEach((to, from) => {
         // }
     }
 })
-
 
 export default router

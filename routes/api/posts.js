@@ -4,7 +4,7 @@ const Post = require('../../models/Post')
 
 const User = require('../../models/User')
 
-const { getUser, getPostUser } = require('./custom/users');
+const { getPostUser } = require('./custom/users');
 const { createdAt } = require('./custom/posts');
 
 

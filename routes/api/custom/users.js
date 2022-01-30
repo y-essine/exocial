@@ -1,4 +1,6 @@
-const User = require('../../../models/User')
+const User = require('../../../models/User');
+
+const { SECRETKEY } = require('../../../config');
 
 const getUser = async (id) => {
     try {
@@ -17,7 +19,7 @@ const getPostUser = async (id) => {
         const user = await User.findById(id)
         if (!user)
             return json({ message: 'user not found' });
-        const { username ,email, bio, password, updatedAt, ...other } = user._doc;
+        const { username, email, bio, password, updatedAt, ...other } = user._doc;
         return other;
     } catch (err) {
         return json({ message: err })

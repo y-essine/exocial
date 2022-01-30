@@ -2,6 +2,13 @@ const User = require('../../models/User');
 const router = require('express').Router();
 const bcrypt = require('bcrypt')
 
+const jwt = require('jsonwebtoken');
+
+const { SECRETKEY } = require('../../config');
+
+
+const { getUserByToken } = require('./custom/users');
+
 //update user
 router.put('/:id', async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -23,6 +30,42 @@ router.put('/:id', async (req, res) => {
         }
     } else {
         return res.status(403).json({ message: 'You can only update your account' })
+    }
+})
+
+// update user profile 
+router.put('/:id/edit', async (req, res) => {
+    try {
+
+        let token = req.body.token;
+        if (token) {
+            jwt.verify(token, SECRETKEY, async (err, decoded) => {
+                if (err) return res.status(201).json({
+                    message: 'not authorized'
+                })
+                //token is valid
+                const user = await User.findOne({ _id: decoded.usedid });
+
+                if (user._id === req.params.id || user.isAdmin) {
+                    try {
+                        User.findByIdAndUpdate(req.params.id, {
+                            $set: req.body,
+                        });
+                        res.status(200).json({ message: 'Account updated.' })
+                    } catch (err) {
+                        res.status(500).json({ message: err })
+                    }
+                }
+                else {
+                    return res.status(400).json({ message: 'Failed to validate' });
+                }
+
+            })
+
+        }
+        else res.status(400).json('nah bro')
+    } catch (error) {
+        res.status(500).json(error)
     }
 })
 
@@ -113,6 +156,7 @@ router.put('/:id/unfollow', async (req, res) => {
         res.status(201).json({ message: 'You cannot follow yourself' })
     }
 })
+
 
 
 module.exports = router;
