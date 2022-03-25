@@ -38,7 +38,7 @@
                         :class="{ 'border-red-500 border-2': this.isEmpty }"
                         class="mt-3 text-t-secondary rounded w-full h-32 sm:h-32 p-3 outline-none resize-none text-sm bg-primary"
                         :disabled="this.isLoading"
-                    >{{ }}</textarea>
+                    ></textarea>
                     <div class="mt-2 flex items-center justify-between">
                         <div class="flex mr-2 text-t-accent text-xs">
                             <svg
