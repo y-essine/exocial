@@ -116,8 +116,8 @@ export default {
                         <span>{{ post.likes.length }}</span>
                     </div>
                     <div class="-space-x-2">
-                        <span v-for="(liker, index) in post.likes.slice(0, 10)">
-                            <router-link :to="'/user/' + liker.username" v-bind:key="liker.username">
+                        <span v-for="(liker, index) in post.likes.slice(0, 10)" v-bind:key="liker.username">
+                            <router-link :to="'/user/' + liker.username" >
                                 <img
                                     :key="liker._id"
                                     :src="liker.avatar"

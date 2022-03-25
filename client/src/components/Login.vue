@@ -8,8 +8,8 @@
 
 <template>
     <div class="bg-anim">
-        <div v-for="x in 100" class="circle-container" >
-            <div v-bind:key="x" class="circle"></div>
+        <div v-for="x in 100" v-bind:key="x" class="circle-container" >
+            <div class="circle"></div>
         </div>
     </div>
     <div class="space-y-10 flex flex-col items-center log">
