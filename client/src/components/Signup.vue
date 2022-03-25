@@ -103,7 +103,7 @@ import { validateRegister } from './validator';
 axios.defaults.baseURL = '/api';
 
 export default {
-    name: 'Signup',
+    name: 'signup-page',
     data() {
         return {
             form: {

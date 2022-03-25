@@ -58,8 +58,4 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #ef4444a1;
     }
-
-    /* Textarea resizer */
-    ::-webkit-resizer{
-    }
 }

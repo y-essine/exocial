@@ -186,7 +186,7 @@ axios.defaults.baseURL = '/api';
 
 
 export default {
-    name: 'Profile',
+    name: 'user-profile-page',
     props: ['isUserLoaded', 'user'],
     data() {
         return {

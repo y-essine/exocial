@@ -7,7 +7,7 @@
 <script >
 
 export default {
-    name: 'Settings',
+    name: 'settings-page',
 }
 
 </script>

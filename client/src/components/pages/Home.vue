@@ -42,7 +42,7 @@ axios.defaults.baseURL = '/api';
 
 
 export default {
-    name: 'Home',
+    name: 'home-page',
     props: ['isUserLoaded', 'user'],
     data() {
         return {
