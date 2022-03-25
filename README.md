@@ -2,7 +2,7 @@
 # EXOCIAL
 ## Vite (Vue3) Social Network APP
 Demo: https://exocial.herokuapp.com/
-- [![CodeFactor](https://www.codefactor.io/repository/github/y-essine/vite-stack/badge)](https://www.codefactor.io/repository/github/y-essine/vite-stack)
+- [![CodeFactor](https://www.codefactor.io/repository/github/y-essine/vite-social/badge)](https://www.codefactor.io/repository/github/y-essine/vite-social)
 ## Description
 A vue social network web app with a responsive UI
 Built using Vite (Vue3) for the front-end and MongoDB, Express, Node for the back-end
