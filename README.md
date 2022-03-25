@@ -4,7 +4,7 @@ Demo: https://vitesocial.herokuapp.com/
 - [![CodeFactor](https://www.codefactor.io/repository/github/y-essine/vite-stack/badge)](https://www.codefactor.io/repository/github/y-essine/vite-stack)
 ## Description
 A vue social network web app with a responsive UI
-Built using vite with vue3 as the front and express, node, mongodb as the backend for the todo list.
+Built using Vite (Vue3) for the front-end and MongoDB, Express, Node for the back-end
 
 ## Dependencies
  ***Client:***
