@@ -33,10 +33,9 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-// update user profile 
+// update user profile by token
 router.put('/:id/edit', async (req, res) => {
     try {
-
         let token = req.body.token;
         if (token) {
             jwt.verify(token, SECRETKEY, async (err, decoded) => {
@@ -48,10 +47,15 @@ router.put('/:id/edit', async (req, res) => {
 
                 if (user._id === req.params.id || user.isAdmin) {
                     try {
-                        User.findByIdAndUpdate(req.params.id, {
-                            $set: req.body,
+                        //take everything but the token
+                        const { token, ...other } = req.body;
+                        console.log(other);
+                        //update the user
+                        const user = await User.findByIdAndUpdate(req.params.id, {
+                            $set: other,
                         });
-                        res.status(200).json({ message: 'Account updated.' })
+                        console.log("Profile updated.");
+                        res.status(200).json({ message: 'Profile updated.' })
                     } catch (err) {
                         res.status(500).json({ message: err })
                     }

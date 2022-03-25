@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col px-8 py-10 w-full">
-                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
+                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly" :class="{ 'md:flex-col lg:flex-row' : this.isEdit }">
                         <div v-if="!this.isEdit" class="justify-center">
                             <h1
                                 class="inline font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
@@ -34,7 +34,7 @@
                                 class="inline font-extrabold text-t-accent hover:text-gray-500/70 text-xl uppercase"
                             >{{ ' ' + user.lastname }}</h1>
                         </div>
-                        <div v-else class="flex justify-center">
+                        <div v-else class="flex justify-center mb-3">
                             <input
                                 type="firstname"
                                 name="firstname"
@@ -52,22 +52,11 @@
                         </div>
 
                         <div>
-                            <h1
-                                v-if="!this.isEdit"
-                                class="text-lg font-semibold text-t-secondary"
-                            >{{ user.email }}</h1>
-                            <input
-                                v-else
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                class="2xs:mt-2 sm:mt-0 inline ml-4 max-w-[16rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
-                                v-model="form.email"
-                            />
+                            <h1 class="text-lg font-semibold text-t-secondary hover:text-gray-400" >{{ user.email }}</h1>
                         </div>
                     </div>
 
-                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
+                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4 " :class="{ 'md:flex-col lg:flex-row' : this.isEdit }">
                         <h1
                             class="font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
                         >{{ 'Followers : ' + user.followers.length }}</h1>
@@ -78,21 +67,28 @@
                     <div v-if="!this.isEdit" class="flex sm:flex-row 2xs:flex-col items-center">
                         <h3
                             v-if="user.bio"
-                            class="text-t-secondary 2xs:mt-2 font-semibold italic sm:ml-auto"
+                            class="text-t-secondary 2xs:mt-2 font-semibold italic sm:ml-auto hover:text-gray-400"
                         >{{ user.bio }}</h3>
                         <button
                             @click="notEdit"
                             class="bg-red-500/50 hover:bg-red-700/50 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
                         >Edit</button>
                     </div>
-                    <div v-else class="flex sm:flex-row 2xs:flex-col items-center">
+                    <div v-else class="flex sm:flex-row 2xs:flex-col items-center" :class="{ 'md:flex-col lg:flex-row justify-evenly' : this.isEdit }">
+                        <textarea
+                            type="description"
+                            name="description"
+                            placeholder="Bio"
+                            class="2xs:mt-2 sm:mt-4 inline min-h-[8rem] max-w-[16rem] h-6 rounded focus:outline-none font-semibold italic text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl"
+                            v-model="form.bio"
+                        />
                         <button
                             @click="saveEdit"
-                            class="bg-green-500/50 hover:bg-green-700/50' 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                            class="bg-green-500/50 hover:bg-green-700/50' 2xs:mt-4 sm:mt-8  text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
                         >Save</button>
                         <button
                             @click="notEdit"
-                            class="bg-gray-700/50 hover:bg-gray-600/50 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                            class="bg-gray-700/50 hover:bg-gray-600/50 2xs:mt-4 sm:mt-8  text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
                         >Cancel</button>
                     </div>
                 </div>
@@ -219,7 +215,8 @@ export default {
             form: {
                 firstname: "",
                 lastname: "",
-                email: ""
+                email: "",
+                bio: "",
             }
         }
     },
@@ -231,26 +228,32 @@ export default {
                     this.isPostsLoaded = true;
                 })
         },
+        updateInfo() {
+            this.user.firstname = this.form.firstname;
+            this.user.lastname = this.form.lastname;
+            this.user.bio = this.form.bio;
+        },
         notEdit() {
             this.isEdit = !this.isEdit
             if (this.isEdit) {
                 this.form.firstname = this.user.firstname;
                 this.form.lastname = this.user.lastname;
-                this.form.email = this.user.email;
+                this.form.bio = this.user.bio;
             }
         },
         async saveEdit() {
-            console.log('doing it now')
             if (!validateProfileEdit(this.form))
                 return;
             await axios.put('/users/' + this.user._id + '/edit', {
                 firstname: this.form.firstname,
                 lastname: this.form.lastname,
-                email: this.form.email,
-                token: localStorage.getItem('authToken')
+                bio: this.form.bio,
+                token: localStorage.getItem('auth_token')
             }).then(res => {
-                if(res.status == 200) 
+                if (res.status == 200) {
                     this.$notify({ type: 'success', text: 'Successfully edited profile.' })
+                    this.updateInfo();
+                }
                 else
                     console.log(res.data)
             });

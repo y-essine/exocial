@@ -12,6 +12,10 @@ function isEmpty(form) {
     return (form.firstname == '' || form.lastname == '' || form.username == '' || form.password == '' || form.email == '')
 }
 
+function isEmptyNoEmail(form) {
+    return (form.firstname == '' || form.lastname == '')
+}
+
 function isEmail(form) {
     return validator.isEmail(form.email)
 }
@@ -26,6 +30,10 @@ function isUsernameValid(form) {
 
 function isPasswordValid(form) {
     return validator.isLength(form.password, { min: 8, max: 20 })
+}
+
+function isBioValid(form){
+    return validator.isLength(form.bio, { min: 8, max: 70} )
 }
 
 const validateRegister = (form) => {
@@ -57,7 +65,7 @@ const validateRegister = (form) => {
 }
 
 const validateProfileEdit = (form) => {
-    if (isEmpty(form)) {
+    if (isEmptyNoEmail(form)) {
         notifyError("Please make sure to fill up the forms!");
         return false;
     }
@@ -67,8 +75,8 @@ const validateProfileEdit = (form) => {
         return false;
     }
 
-    if (!isEmail(form)) {
-        notifyError("Make sure you typed a valid email");
+    if(!isBioValid(form)){
+        notifyError("Make sure the bio is valid ( Min: 8 Max: 70 characters )")
         return false;
     }
 

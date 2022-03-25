@@ -14,6 +14,11 @@ const PostSchema = new Schema({
     likes: [{
         type: Schema.Types.ObjectId,
         ref: 'user'
+    }],
+    comments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'comment',
+        default: []
     }]
 },
     { timestamps: true }

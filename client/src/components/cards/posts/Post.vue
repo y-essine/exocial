@@ -101,7 +101,7 @@ export default {
                 <div class="flex items-center justify-between">
                     <router-link :to="'/user/' + post.author.username">
                         <h2
-                            class="text-lg font-semibold text-t-primary -mt-1 cursor-pointer"
+                            class="text-lg font-semibold text-t-primary -mt-1 cursor-pointer hover:text-gray-400"
                         >{{ post.author.firstname + ' ' + post.author.lastname }}</h2>
                     </router-link>
                     <small
@@ -116,14 +116,18 @@ export default {
                         <span>{{ post.likes.length }}</span>
                     </div>
                     <div class="-space-x-2">
-                        <img
-                            v-for="(liker,index) in post.likes.slice(0, 10)"
-                            :key="liker._id"
-                            :src="liker.avatar"
-                            :style="{ 'z-index': 20 - index }"
-                            class="relative inline object-cover w-6 h-6 border-2 border-secondary rounded-full"
-                            :alt="liker.username"
-                        />
+                        <span v-for="(liker, index) in post.likes.slice(0, 10)">
+                            <router-link :to="'/user/' + liker.username">
+                                <img
+                                    :key="liker._id"
+                                    :src="liker.avatar"
+                                    :style="{ 'z-index': 20 - index }"
+                                    class="relative inline object-cover w-6 h-6 border-2 border-secondary rounded-full"
+                                    :alt="liker.username"
+                                    :title="liker.username"
+                                />
+                            </router-link>
+                        </span>
                     </div>
                 </div>
             </div>

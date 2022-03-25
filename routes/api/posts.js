@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const Post = require('../../models/Post')
+const Post = require('../../models/posts/Post')
 
 const User = require('../../models/User')
 
@@ -95,7 +95,7 @@ router.post('/feed/all', async (req, res) => {
         // my posts
         const userPosts = currentUser ? (await Post.find({ author: currentUser._id })
             .populate('author', 'username avatar firstname lastname createdAt')
-            .populate('likes', 'avatar firstname lastname')
+            .populate('likes', 'avatar firstname lastname username')
             .sort({ createdAt: -1 })) : {};
         userPosts.forEach(element => {
             feed.push(element)
@@ -107,7 +107,7 @@ router.post('/feed/all', async (req, res) => {
                 let postUser = await getPostUser(followedId);
                 let posts = (postUser) ? (await Post.find({ author: followedId })
                     .populate('author', 'username avatar firstname lastname createdAt')
-                    .populate('likes', 'avatar firstname lastname')
+                    .populate('likes', 'avatar firstname lastname username')
                     .sort({ createdAt: -1 })) : {};
                 posts.forEach(element => {
                     feed.push(element)
@@ -129,7 +129,7 @@ router.get('/:id/posts', async (req, res) => {
     try {
         const userPosts = await (Post.find({ author: req.params.id })
             .populate('author', 'username avatar firstname lastname createdAt')
-            .populate('likes', 'avatar firstname lastname')
+            .populate('likes', 'avatar firstname lastname username')
             .sort({ createdAt: -1 }));
         userPosts.forEach(element => {
             feed.push(element)

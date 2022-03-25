@@ -8,7 +8,7 @@
     .theme-dark {
         --color-primary: #1d1d1d;
         --color-secondary: #262626;
-        --color-tertiary: rgb(64,64,64);
+        --color-tertiary: rgb(64, 64, 64);
         --color-accent: #171717;
 
         --text-primary: #e5e7eb;
@@ -35,5 +35,31 @@
     body {
         @apply bg-primary;
         transition: color 300ms ease;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 8px;
+        background: #262626;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #171717;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgb(239 68 68 / 0.5);
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #ef4444a1;
+    }
+
+    /* Textarea resizer */
+    ::-webkit-resizer{
     }
 }

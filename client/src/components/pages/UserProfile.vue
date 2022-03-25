@@ -20,6 +20,11 @@
                         :src="profileUser.avatar"
                         alt="avatar"
                     />
+                    <div v-if="profileUser.isAdmin" class="flex justify-center mt-4">
+                        <h1
+                            class="admin inline text-lg font-extrabold text-red-500 px-3 py-1 rounded bg-accent"
+                        >Admin</h1>
+                    </div>
                 </div>
                 <div class="flex flex-col px-8 py-10 pt-6 w-full">
                     <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
@@ -34,7 +39,7 @@
 
                         <div>
                             <h1
-                                class="text-lg font-semibold text-t-secondary"
+                                class="text-lg font-semibold text-t-secondary hover:text-gray-400"
                             >{{ profileUser.email }}</h1>
                         </div>
                     </div>
@@ -44,8 +49,16 @@
                         >{{ 'Followers : ' + profileFollowers }}</h1>
                         <h1
                             class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
-                        >{{ 'Following : ' + this.profileUser.followings.length }}</h1>
+                        >{{ 'Following : ' + profileUser.followings.length }}</h1>
+                        
                     </div>
+                    <div class="flex justify-center mt-2">
+                        <h3
+                            v-if="user.bio"
+                            class="text-t-secondary 2xs:mt-2 font-semibold italic hover:text-gray-400"
+                        >{{ profileUser.bio }}</h3>
+                    </div>
+                    
                     <div class="flex justify-center mt-4">
                         <button
                             @click="followUser"
@@ -146,7 +159,7 @@
             >Posts</h1>
             <div class="mt-8">
                 <transition-group name="post-list" tag="ul">
-                    <li v-for="(post,index) in posts" :key="post">
+                    <li v-for="(post, index) in posts" :key="post">
                         <Post v-bind:post="post" :index="index" :currentUser="user" />
                     </li>
                 </transition-group>
