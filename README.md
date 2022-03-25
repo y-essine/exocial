@@ -1,5 +1,6 @@
 ## _-- CURRENTLY IN DEVELOPMENT --_
-# Vite (Vue3) Social Network APP
+# EXOCIAL
+## Vite (Vue3) Social Network APP
 Demo: https://vitesocial.herokuapp.com/
 - [![CodeFactor](https://www.codefactor.io/repository/github/y-essine/vite-stack/badge)](https://www.codefactor.io/repository/github/y-essine/vite-stack)
 ## Description
