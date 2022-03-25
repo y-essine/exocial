@@ -10,6 +10,7 @@ axios.defaults.baseURL = '/api';
 
 
 export default {
+    name: 'post-item',
     props: {
         post: {
             required: true

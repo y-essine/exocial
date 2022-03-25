@@ -94,7 +94,7 @@
 import { ContentLoader } from 'vue-content-loader';
 
 export default {
-    name: 'Header',
+    name: 'nav-header',
     props: ['isUserLoaded', 'user'],
     components: {
         ContentLoader

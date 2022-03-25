@@ -36,6 +36,7 @@ import axios from 'axios';
 axios.defaults.baseURL = '/api';
 
 export default {
+    name: 'main',
     components: {
         Header,
         Sidebar,

@@ -48,6 +48,7 @@ import SidebarLink from './SidebarLink.vue'
 
 
 export default {
+    name: 'nav-sidebar',
     data() {
         return {
             open: false

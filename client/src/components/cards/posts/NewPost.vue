@@ -81,7 +81,7 @@ axios.defaults.baseURL = '/api';
 import moment from 'moment';
 
 export default {
-    name: 'NewPost',
+    name: 'new-post-item',
     emits: ['closePost', 'newPost'],
     props: {
         user: {

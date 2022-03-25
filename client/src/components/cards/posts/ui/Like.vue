@@ -54,6 +54,7 @@
 
 <script>
 export default {
+    name: 'like-check',
     props: ['checked','index'],
 
 }
