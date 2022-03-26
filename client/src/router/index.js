@@ -26,23 +26,23 @@ const routes = [
             {
                 path: '/chat',
                 name: 'Chatest',
-                component: () => import(pagesUrl+'/chat/Chatest.vue')
+                component: () => import('/src/components/pages/chat/Chatest.vue')
 
             },
             {
                 path: '/profile',
                 name: 'Profile',
-                component: () => import(pagesUrl+'/profile/Profile.vue')
+                component: () => import('/src/components/pages/profile/Profile.vue')
             },
             {
                 path: '/settings',
                 name: 'Settings',
-                component: () => import(pagesUrl+'/settings/Settings.vue')
+                component: () => import('/src/components/pages/settings/Settings.vue')
             },
             {
                 path: '/user/:username',
                 name: 'User',
-                component: () => import(pagesUrl+'/userprofile/UserProfile.vue')
+                component: () => import('/src/components/pages/userprofile/UserProfile.vue')
             }
         ]
     },

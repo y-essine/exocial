@@ -111,25 +111,44 @@ export default {
                 </div>
                 <p class="text-t-accent text-xs">Joined {{ formatDate(post.author.createdAt) }}.</p>
                 <p class="mt-3 text-t-secondary text-sm">{{ post.content }}</p>
-                <div class="mt-4 flex items-center">
-                    <div class="flex mr-2 text-t-accent text-xs">
-                        <Like @mouseup="likePost(post._id)" :checked="this.isLiked" :index="index" />
-                        <span>{{ post.likes.length }}</span>
-                    </div>
-                    <div class="-space-x-2">
-                        <span v-for="(liker, index) in post.likes.slice(0, 10)" v-bind:key="liker.username">
-                            <router-link :to="'/user/' + liker.username" >
-                                <img
-                                    :key="liker._id"
-                                    :src="liker.avatar"
-                                    :style="{ 'z-index': 20 - index }"
-                                    class="relative inline object-cover w-6 h-6 border-2 border-secondary rounded-full"
-                                    :alt="liker.username"
-                                    :title="liker.username"
-                                />
-                            </router-link>
-                        </span>
-                    </div>
+                <div class="mt-4 flex">
+                    <span class="flex items-center">
+                        <div class="flex mr-2 text-t-accent text-xs">
+                            <Like
+                                @mouseup="likePost(post._id)"
+                                :checked="this.isLiked"
+                                :index="index"
+                            />
+                            <span>{{ post.likes.length }}</span>
+                        </div>
+                        <div class="-space-x-2">
+                            <span
+                                v-for="(liker, index) in post.likes.slice(0, 10)"
+                                v-bind:key="liker.username"
+                            >
+                                <router-link :to="'/user/' + liker.username">
+                                    <img
+                                        :key="liker._id"
+                                        :src="liker.avatar"
+                                        :style="{ 'z-index': 20 - index }"
+                                        class="relative inline object-cover w-6 h-6 border-2 border-secondary rounded-full"
+                                        :alt="liker.username"
+                                        :title="liker.username"
+                                    />
+                                </router-link>
+                            </span>
+                        </div>
+                    </span>
+                    <span class="ml-auto" v-if="currentUser.id == post.author._id">
+                        <font-awesome-icon
+                            :icon="['fas', 'trash-alt']"
+                            class="mr-3 w-4 cursor-pointer text-t-accent hover:text-red-500/70"
+                        />
+                        <font-awesome-icon
+                            :icon="['fas', 'edit']"
+                            class="mr-3 w-4 cursor-pointer text-t-accent hover:text-blue-500/70"
+                        />
+                    </span>
                 </div>
             </div>
         </div>
