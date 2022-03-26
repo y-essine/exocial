@@ -7,7 +7,7 @@
 <script>
 
 export default {
-    
+    name: 'chat-bubble'
 }
 
 </script>

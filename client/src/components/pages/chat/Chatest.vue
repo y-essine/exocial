@@ -10,7 +10,7 @@
 
 <script>
 
-import Chatbox from '../chat/box/Chatbox.vue'
+import Chatbox from '../../chat/box/Chatbox.vue'
 
 import axios from 'axios';
 

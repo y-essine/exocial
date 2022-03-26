@@ -41,7 +41,7 @@
 <script>
 
 export default {
-    Name: 'Chatbox',
+    Name: 'chat-box',
     data() {
         return {
 

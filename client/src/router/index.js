@@ -1,12 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+
 import Main from '/src/components/Main.vue'
-import Home from '/src/components/pages/Home.vue'
+import Home from '/src/components/pages/home/Home.vue'
 import Login from '/src/components/Login.vue'
 import Signup from '/src/components/Signup.vue'
 
 import NProgress from 'nprogress'
 
+const componentsUrl = '/src/components';
+const pagesUrl = '/src/components/pages';
 
 const routes = [
     {
@@ -23,23 +26,23 @@ const routes = [
             {
                 path: '/chat',
                 name: 'Chatest',
-                component: () => import('/src/components/pages/Chatest.vue')
+                component: () => import(pagesUrl+'/chat/Chatest.vue')
 
             },
             {
                 path: '/profile',
                 name: 'Profile',
-                component: () => import('/src/components/pages/Profile.vue')
+                component: () => import(pagesUrl+'/profile/Profile.vue')
             },
             {
                 path: '/settings',
                 name: 'Settings',
-                component: () => import('/src/components/pages/Settings.vue')
+                component: () => import(pagesUrl+'/settings/Settings.vue')
             },
             {
                 path: '/user/:username',
                 name: 'User',
-                component: () => import('/src/components/pages/UserProfile.vue')
+                component: () => import(pagesUrl+'/userprofile/UserProfile.vue')
             }
         ]
     },

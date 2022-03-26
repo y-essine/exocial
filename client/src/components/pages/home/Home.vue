@@ -31,8 +31,8 @@
 
 <script>
 
-import Post from '../cards/posts/Post.vue';
-import NewPost from '../cards/posts/NewPost.vue';
+import Post from '../../cards/posts/Post.vue';
+import NewPost from '../../cards/posts/NewPost.vue';
 
 import moment from 'moment'
 

@@ -4,92 +4,66 @@
             <h1
                 class="inline text-lg font-extrabold text-secondary px-3 py-1 rounded bg-t-secondary"
             >Details</h1>
+
             <div
-                v-if="this.isUserLoaded"
-                class="mt-8 w-full flex justify-between sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg"
+                v-if="this.isLoaded"
+                class="mt-8 w-full flex sm:flex-row 2xs:flex-col items-center bg-secondary rounded-xl sm:pl-8 2xs:px-0 sm:py-8 2xs:pt-8 shadow-lg"
             >
                 <div class="flex flex-col items-center min-w-fit">
                     <h1
                         class="mb-2 font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
-                    >{{ user.username }}</h1>
+                    >{{ profileUser.username }}</h1>
+
                     <img
-                        :class="{ 'admin': user.isAdmin }"
-                        class="w-32 h-32 rounded-full object-cover shadow-lg"
-                        :src="user.avatar"
+                        :class="{ 'admin': profileUser.isAdmin }"
+                        class="w-32 h-32 rounded-full object-cover shadow-md"
+                        :src="profileUser.avatar"
                         alt="avatar"
                     />
-                    <div v-if="user.isAdmin" class="flex justify-center mt-4">
+                    <div v-if="profileUser.isAdmin" class="flex justify-center mt-4">
                         <h1
                             class="admin inline text-lg font-extrabold text-red-500 px-3 py-1 rounded bg-accent"
                         >Admin</h1>
                     </div>
                 </div>
-                <div class="flex flex-col px-8 py-10 w-full">
-                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly" :class="{ 'md:flex-col lg:flex-row' : this.isEdit }">
-                        <div v-if="!this.isEdit" class="justify-center">
+                <div class="flex flex-col px-8 py-10 pt-6 w-full">
+                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly">
+                        <div class="justify-center">
                             <h1
                                 class="inline font-extrabold text-t-secondary hover:text-gray-400 text-xl uppercase"
-                            >{{ user.firstname }}</h1>
+                            >{{ profileUser.firstname }}</h1>
                             <h1
                                 class="inline font-extrabold text-t-accent hover:text-gray-500/70 text-xl uppercase"
-                            >{{ ' ' + user.lastname }}</h1>
-                        </div>
-                        <div v-else class="flex justify-center mb-3">
-                            <input
-                                type="firstname"
-                                name="firstname"
-                                placeholder="Firstname"
-                                class="inline max-w-[9.5rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase text-right"
-                                v-model="form.firstname"
-                            />
-                            <input
-                                type="lastname"
-                                name="lastname"
-                                placeholder="Lastname"
-                                class="inline ml-4 max-w-[9.5rem] h-6 rounded focus:outline-none font-extrabold text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl uppercase"
-                                v-model="form.lastname"
-                            />
+                            >{{ ' ' + profileUser.lastname }}</h1>
                         </div>
 
                         <div>
-                            <h1 class="text-lg font-semibold text-t-secondary hover:text-gray-400" >{{ user.email }}</h1>
+                            <h1
+                                class="text-lg font-semibold text-t-secondary hover:text-gray-400"
+                            >{{ profileUser.email }}</h1>
                         </div>
                     </div>
-
-                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4 " :class="{ 'md:flex-col lg:flex-row' : this.isEdit }">
+                    <div class="flex sm:flex-row 2xs:flex-col items-center justify-evenly mt-4">
                         <h1
                             class="font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
-                        >{{ 'Followers : ' + user.followers.length }}</h1>
+                        >{{ 'Followers : ' + profileFollowers }}</h1>
                         <h1
                             class="2xs:mt-3 sm:mt-0 font-semibold text-t-secondary hover:text-gray-400 text-md cursor-pointer"
-                        >{{ 'Following : ' + user.myFollowings }}</h1>
+                        >{{ 'Following : ' + profileUser.followings.length }}</h1>
+                        
                     </div>
-                    <div v-if="!this.isEdit" class="flex sm:flex-row 2xs:flex-col items-center">
+                    <div class="flex justify-center mt-2">
                         <h3
                             v-if="user.bio"
-                            class="text-t-secondary 2xs:mt-2 font-semibold italic sm:ml-auto hover:text-gray-400"
-                        >{{ user.bio }}</h3>
-                        <button
-                            @click="notEdit"
-                            class="bg-red-500/50 hover:bg-red-700/50 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
-                        >Edit</button>
+                            class="text-t-secondary 2xs:mt-2 font-semibold italic hover:text-gray-400"
+                        >{{ profileUser.bio }}</h3>
                     </div>
-                    <div v-else class="flex sm:flex-row 2xs:flex-col items-center" :class="{ 'md:flex-col lg:flex-row justify-evenly' : this.isEdit }">
-                        <textarea
-                            type="description"
-                            name="description"
-                            placeholder="Bio"
-                            class="2xs:mt-2 sm:mt-4 inline min-h-[8rem] max-w-[16rem] h-6 rounded focus:outline-none font-semibold italic text-secondary bg-t-accent p-4 placeholder:text-tertiary text-xl"
-                            v-model="form.bio"
-                        />
+                    
+                    <div class="flex justify-center mt-4">
                         <button
-                            @click="saveEdit"
-                            class="bg-green-500/50 hover:bg-green-700/50' 2xs:mt-4 sm:mt-8  text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
-                        >Save</button>
-                        <button
-                            @click="notEdit"
-                            class="bg-gray-700/50 hover:bg-gray-600/50 2xs:mt-4 sm:mt-8  text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
-                        >Cancel</button>
+                            @click="followUser"
+                            class="inline text-lg font-extrabold text-t-secondary px-3 py-1 rounded bg-primary hover:bg-accent shadow-md"
+                        >{{ Text = this.isFollowed ? 'Unfollow' : 'Follow' }}</button>
                     </div>
                 </div>
             </div>
@@ -166,6 +140,16 @@
                             <rect x="0" y="0" rx="4" ry="4" width="96" height="22" />
                         </content-loader>
                     </div>
+                    <div class="flex justify-center mt-4">
+                        <content-loader
+                            class="inline ml-2 mb-1 h-full w-24"
+                            viewBox="0 0 96 36"
+                            primaryColor="#303030"
+                            secondaryColor="#343434"
+                        >
+                            <rect x="0" y="0" rx="4" ry="4" width="96" height="36" />
+                        </content-loader>
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,74 +176,81 @@
 
 <script >
 
-
 import { ContentLoader } from 'vue-content-loader';
 
-import Post from '../cards/posts/Post.vue';
+import Post from '../../cards/posts/Post.vue';
 
 import axios from 'axios';
-
-import { validateProfileEdit } from '../validator';
 
 axios.defaults.baseURL = '/api';
 
 
 export default {
-    name: 'profile-page',
+    name: 'user-profile-page',
     props: ['isUserLoaded', 'user'],
     data() {
         return {
-            isEdit: false,
+            isFollowed: false,
+            isLoaded: false,
             isPostsLoaded: false,
-            posts: {},
-            form: {
-                firstname: "",
-                lastname: "",
-                email: "",
-                bio: "",
-            }
+            profileFollowers: 0,
+            profileUser: { followers: [], followings: [] },
+            posts: {}
         }
     },
     methods: {
-        async getPosts() {
-            await axios.get('/posts/' + this.user._id + '/posts')
+        async getUser() {
+            await axios.get('/users/username/' + this.$route.params.username)
                 .then(res => {
-                    this.posts = res.data;
-                    this.isPostsLoaded = true;
+                    if (res.status == 201) {
+                        this.$notify({ type: 'error', title: 'User not found!', text: "The user you're trying to reach is not found." });
+                        this.$router.push('/');
+                        return;
+                    }
+                    this.profileUser = res.data.user;
+                    this.profileFollowers = this.profileUser.followers.length;
+                    this.checkIfFollowed(this.profileUser);
                 })
         },
-        updateInfo() {
-            this.user.firstname = this.form.firstname;
-            this.user.lastname = this.form.lastname;
-            this.user.bio = this.form.bio;
+        async getPosts() {
+            await this.getUser().then(async () => {
+                this.isLoaded = true;
+                if (this.user.username == this.$route.params.username)
+                    return this.$router.push('/profile')
+                await axios.get('/posts/' + this.profileUser._id + '/posts')
+                    .then(res => {
+                        this.posts = res.data;
+                        this.isPostsLoaded = true;
+                    })
+            })
         },
-        notEdit() {
-            this.isEdit = !this.isEdit
-            if (this.isEdit) {
-                this.form.firstname = this.user.firstname;
-                this.form.lastname = this.user.lastname;
-                this.form.bio = this.user.bio;
-            }
-        },
-        async saveEdit() {
-            if (!validateProfileEdit(this.form))
-                return;
-            await axios.put('/users/' + this.user._id + '/edit', {
-                firstname: this.form.firstname,
-                lastname: this.form.lastname,
-                bio: this.form.bio,
-                token: localStorage.getItem('auth_token')
-            }).then(res => {
-                if (res.status == 200) {
-                    this.$notify({ type: 'success', text: 'Successfully edited profile.' })
-                    this.updateInfo();
+        checkIfFollowed(user) {
+            user.followers.forEach(element => {
+                if (element._id == this.user._id) {
+                    this.isFollowed = true;
                 }
-                else
-                    console.log(res.data)
-            });
 
-            this.notEdit();
-        }
+            });
+        },
+        async followUser() {
+            let instruction = '';
+            if (this.isFollowed) {
+                instruction = '/unfollow';
+                this.profileFollowers--;
+                this.user.myFollowings--;
+            }
+            else {
+                instruction = '/follow';
+                this.profileFollowers++;
+                this.user.myFollowings++;
+            }
+            this.isFollowed = !this.isFollowed;
+
+            await axios.put('/users/' + this.profileUser._id + instruction, { userId: this.user.id })
+                .then(res => {
+                    console.log(res.data);
+                })
+        },
     },
     watch: {
         isUserLoaded: async function (newValue) {
