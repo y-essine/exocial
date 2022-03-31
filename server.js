@@ -35,7 +35,7 @@ app
 app.use(function (req, res, next) {
     res.setHeader(
         'Content-Security-Policy', "script-src 'self'; img-src 'self' https://i.imgur.com https://w7.pngwing.com/; frame-src 'self'"
-      );
+    );
     next();
 });
 
@@ -60,5 +60,21 @@ if (process.env.NODE_ENV == 'production') {
     })
 }
 
-app.listen(PORT, () => console.log((`App listening at http://localhost:${PORT}`)));
+app.listen(PORT, () => console.log((`Node listening at http://localhost:${PORT}`)));
 
+const http = require('http');
+const httpServer = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(httpServer, {
+    cors: {
+      origin: "https://localhost:9000",
+      methods: ["GET", "POST"]}
+    });
+
+io.on('connection', () => {
+  console.log('a user connected');
+});
+
+httpServer.listen(9000, () => {
+  console.log('Sockets listening on *:9000');
+});

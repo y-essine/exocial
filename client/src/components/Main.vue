@@ -20,6 +20,7 @@
             <Header :isUserLoaded="this.isUserLoaded" v-bind:user="this.user" />
             <div class="page-container py-3">
                 <router-view :isUserLoaded="this.isUserLoaded" v-bind:user="this.user" />
+                
             </div>
         </div>
     </div>
@@ -33,6 +34,9 @@ import Header from './header/Header.vue';
 
 import axios from 'axios';
 
+import io from 'socket.io-client';
+
+
 axios.defaults.baseURL = '/api';
 
 export default {
@@ -40,6 +44,9 @@ export default {
     components: {
         Header,
         Sidebar,
+    },
+    setup() {
+        const socket = io('http://localhost:8080');
     },
     data() {
         return {

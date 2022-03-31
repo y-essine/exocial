@@ -65,6 +65,7 @@
                             class="inline text-lg font-extrabold text-t-secondary px-3 py-1 rounded bg-primary hover:bg-accent shadow-md"
                         >{{ Text = this.isFollowed ? 'Unfollow' : 'Follow' }}</button>
                     </div>
+                    
                 </div>
             </div>
             <div

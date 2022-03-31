@@ -15,6 +15,8 @@
     "axios": "^0.24.0",
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "validator": "^13.7.0",
     "vite-stack": "file:..",
     "vue": "^3.2.23",

@@ -4,7 +4,7 @@ const { SECRETKEY } = require('../../../config');
 
 const getUser = async (id) => {
     try {
-        const user = await User.findById(id)
+        const user = await User.findById({$eq: id});
         if (!user)
             return json({ message: 'user not found' });
         const { password, updatedAt, ...other } = user._doc;

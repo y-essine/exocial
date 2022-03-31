@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import notifications from '@kyvg/vue3-notification'
-import VModal from 'vue-js-modal'
+
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCircleNotch, faUser, faCog, faHome, faSignOutAlt, faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";

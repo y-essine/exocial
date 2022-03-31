@@ -51,23 +51,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-//like post
-router.put('/:id/like', async (req, res) => {
-    try {
-        const post = await Post.findById(req.params.id);
-        if (!post)
-            return res.status(403).json({ message: 'post not found' })
-        if (!post.likes.includes(req.body.userId)) {
-            await post.updateOne({ $push: { likes: req.body.userId } })
-            res.status(200).json({ message: 'Post liked' });
-        } else {
-            await post.updateOne({ $pull: { likes: req.body.userId } })
-            res.status(200).json({ message: 'Post disliked' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error })
-    }
-})
+
 
 
 //get post
@@ -140,6 +124,63 @@ router.get('/:id/posts', async (req, res) => {
         res.status(500).json({ error: error })
     }
 })
+
+
+//like post
+router.put('/:id/like', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post)
+            return res.status(403).json({ message: 'post not found' })
+        if (!post.likes.includes(req.body.userId)) {
+            await post.updateOne({ $push: { likes: req.body.userId } })
+            res.status(200).json({ message: 'Post liked' });
+        } else {
+            await post.updateOne({ $pull: { likes: req.body.userId } })
+            res.status(200).json({ message: 'Post disliked' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+})
+
+//share post
+router.put('/:id/share', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post)
+            return res.status(403).json({ message: 'post not found' })
+        if (!post.shares.includes(req.body.userId)) {
+            await post.updateOne({ $push: { shares: req.body.userId } })
+            res.status(200).json({ message: 'Post shared' });
+        } else {
+            await post.updateOne({ $pull: { shares: req.body.userId } })
+            res.status(200).json({ message: 'Post unshared' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+})
+
+//report post
+router.put('/:id/report', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post)
+
+            return res.status(403).json({ message: 'post not found' })
+        if (!post.reports.includes(req.body.userId)) {
+            await post.updateOne({ $push: { reports: req.body.userId } })
+            res.status(200).json({ message: 'Post reported' });
+        } else {
+            await post.updateOne({ $pull: { reports: req.body.userId } })
+            res.status(200).json({ message: 'Post unreported' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+})
+
 
 
 module.exports = router;
