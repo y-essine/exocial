@@ -6,7 +6,7 @@
 
         <button
             @click="notOpen"
-            :class="{ 'bg-green-700/50 hover:bg-green-700': !isPostOpen, 'bg-red-500/50 hover:bg-red-700/50 ': isPostOpen }"
+            :class="{ 'bg-green-700/70 hover:bg-green-700': !isPostOpen, 'bg-red-700/70 hover:bg-red-700/90 ': isPostOpen }"
             class="text-lg font-extrabold text-gray-200 px-3 py-1 rounded"
         >{{ Text = isPostOpen ? 'Cancel' : 'Post' }}</button>
     </div>

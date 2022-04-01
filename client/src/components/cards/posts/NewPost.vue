@@ -17,7 +17,7 @@
     <transition appear name="fadeHeight" mode="in-out">
         <div
             v-if="isOpen"
-            class="bg-neutral-900 shadow-lg rounded-lg md:mx-auto my-5 md:max-w-2xl"
+            class="bg-accent shadow-lg rounded-lg md:mx-auto my-5 md:max-w-2xl"
         >
             <div class="flex items-start px-4 py-6">
                 <img

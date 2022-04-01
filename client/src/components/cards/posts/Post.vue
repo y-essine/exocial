@@ -93,7 +93,7 @@ export default {
         <div class="flex items-start px-4 py-6">
             <router-link :to="'/user/' + post.author.username">
                 <img
-                    class="w-12 h-12 rounded-full object-cover mr-4 shadow-md float-left cursor-pointer"
+                    class="w-12 h-12 rounded-full object-cover mr-4 shadow-[0_5px_10px_0_rgba(0,0,0,0.3)] float-left cursor-pointer"
                     v-bind:src="post.author.avatar"
                     alt="avatar"
                 />

@@ -22,13 +22,13 @@
                 />
                 <button
                     @click="$refs.fileInput.click()"
-                    class="bg-indigo-500/50 hover:bg-indigo-700/50 2xs:mt-6 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 py-1 rounded w-20"
+                    class="bg-indigo-700/70 hover:bg-indigo-700/90 2xs:mt-6 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 py-1 rounded w-20"
                 >Change avatar</button>
                 <button
                     v-show="this.isAvatarSelected"
                     :disabled="this.isAvatarUploading"
                     @click="uploadAvatar"
-                    class="bg-green-500/50 hover:bg-green-700/50 2xs:mt-6 sm:mt-10 ml-2 text-lg font-extrabold text-gray-200 py-1 rounded w-10 h-10"
+                    class="bg-green-700/70 hover:bg-green-700/90 2xs:mt-6 sm:mt-10 ml-2 text-lg font-extrabold text-gray-200 py-1 rounded w-10 h-10"
                 >↑</button>
             </div>
 
@@ -110,7 +110,7 @@
                 >{{ user.bio }}</h3>
                 <button
                     @click="notEdit"
-                    class="bg-red-500/50 hover:bg-red-700/50 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                    class="bg-red-700/70 hover:bg-red-700/90 2xs:mt-4 sm:mt-10 sm:ml-auto text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
                 >Edit</button>
             </div>
             <div
@@ -127,11 +127,11 @@
                 />
                 <button
                     @click="saveEdit"
-                    class="bg-green-500/50 hover:bg-green-600/50 2xs:mt-4 sm:mt-8 text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                    class="bg-green-700/70 hover:bg-green-700/90 2xs:mt-4 sm:mt-8 text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
                 >Save</button>
                 <button
                     @click="notEdit"
-                    class="bg-gray-700/50 hover:bg-gray-600/50 2xs:mt-4 sm:mt-8 text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
+                    class="bg-gray-700/70 hover:bg-gray-700/90 2xs:mt-4 sm:mt-8 text-lg font-extrabold text-gray-200 px-3 py-1 rounded w-20 h-10"
                 >Cancel</button>
             </div>
         </div>
