@@ -20,7 +20,7 @@
             <Header :isUserLoaded="this.isUserLoaded" v-bind:user="this.user" />
             <div class="page-container py-3">
                 <router-view :isUserLoaded="this.isUserLoaded" v-bind:user="this.user" />
-                
+
             </div>
         </div>
     </div>
@@ -46,12 +46,13 @@ export default {
         Sidebar,
     },
     setup() {
-        const socket = io('http://localhost:8080');
     },
     data() {
         return {
             isUserLoaded: false,
-            user: { _id: 'Loading...', username: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' }
+            user: { _id: 'Loading...', username: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' },
+
+            socket: io('/'),
         }
     },
     created() {
@@ -60,6 +61,16 @@ export default {
             this.$notify({ type: 'error', title: 'No login!', text: "Please log in first." });
             this.$router.push('/login');
         }
+
+        this.socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+        this.socket.on('onlinenotif', (message) => {
+            this.$notify({ type: 'info', title: 'New online!', text: message });
+        });
+        this.socket.on('likednotif', (message) => {
+            this.$notify({ type: 'info', title: 'New like!', text: `${message.from.username} liked your post: ${message.post.content} (${message.post.author.username})` });
+        });
     },
     async mounted() {
         await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
@@ -67,7 +78,11 @@ export default {
                 this.user = res.data.user;
                 this.user.myFollowings = this.user.followings.length;
                 this.isUserLoaded = true;
-                this.$store.dispatch('saveUser', this.user)
+                this.$store.dispatch('saveUser', this.user);
+                this.socket.emit('online', this.user);
+
+            }, err => {
+                this.$notify({ type: 'error', title: 'Error!', text: "Trouble in getting user..." });
             })
     },
     methods: {
@@ -76,6 +91,9 @@ export default {
             this.$notify({ type: 'warning', title: 'Logged out', text: "Logged out successfully." });
             this.$router.push('/login');
             localStorage.clear();
+        },
+        socketed() {
+            this.$notify({ type: 'info', title: 'Connected', text: 'You are now connected to the server' });
         }
     }
 
