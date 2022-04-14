@@ -60,6 +60,7 @@ the same for the jwt secret key `export SECRET_KEY=<your_key>`
 Run command: `npm run dev`
 
 ## Todos:
+- Migrate current methods to vuex/pinia micro-services
 - Lazy loading posts
 - Edit posts
 - Check follow(ers/ings) lists
