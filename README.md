@@ -59,4 +59,12 @@ the same for the jwt secret key `export SECRET_KEY=<your_key>`
 ## Running the build
 Run command: `npm run dev`
 
+##Todos:
+- Lazy loading posts
+- Edit posts
+- Check follow(ers/ings) lists
+- Implement notifications system
+- Integrate sockets system with follows + likes for live notifs
+- Implement a chatting system
+
 
