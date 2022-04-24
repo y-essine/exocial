@@ -13,7 +13,7 @@ As seen in the config.js file `mongoUri: process.env.MONGO_URI,`, the database u
 use the cmd `export MONGO_URI=<your_uri>` replacing your_uri with yours...
 the same for the jwt secret key `export SECRET_KEY=<your_key>`
 
-## Running the build
+## Running the project
 Run command: `npm run dev`
 
 ## Todos:
