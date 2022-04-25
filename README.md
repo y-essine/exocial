@@ -23,7 +23,8 @@ Run command: `npm run dev`
 - Check follow(ers/ings) lists
 - Implement comments system for posts
 - Implement notifications system
-- Integrate sockets system with follows + likes for live notifs
+- Integrate sockets system for follows + likes with live notifs
 - Implement a chatting system
+- Work on SEO and general metadata stuff
 
 
