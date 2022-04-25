@@ -21,6 +21,7 @@ Run command: `npm run dev`
 - Lazy loading posts
 - Edit posts
 - Check follow(ers/ings) lists
+- Implement comments system for posts
 - Implement notifications system
 - Integrate sockets system with follows + likes for live notifs
 - Implement a chatting system
