@@ -34,7 +34,7 @@ import Header from './header/Header.vue';
 
 import axios from 'axios';
 
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 
 axios.defaults.baseURL = '/api';
@@ -52,7 +52,7 @@ export default {
             isUserLoaded: false,
             user: { _id: 'Loading...', username: 'Loading...', firstname: 'Loading...', lastname: 'Loading...', avatar: '' },
 
-            socket: io('/'),
+            // socket: io('/'),
         }
     },
     created() {
@@ -62,15 +62,15 @@ export default {
             this.$router.push('/login');
         }
 
-        this.socket.on('connect', () => {
-            console.log('Connected to server');
-        });
-        this.socket.on('onlinenotif', (message) => {
-            this.$notify({ type: 'info', title: 'New online!', text: message });
-        });
-        this.socket.on('likednotif', (message) => {
-            this.$notify({ type: 'info', title: 'New like!', text: `${message.from.username} liked your post: ${message.post.content} (${message.post.author.username})` });
-        });
+        // this.socket.on('connect', () => {
+        //     console.log('Connected to server');
+        // });
+        // this.socket.on('onlinenotif', (message) => {
+        //     this.$notify({ type: 'info', title: 'New online!', text: message });
+        // });
+        // this.socket.on('likednotif', (message) => {
+        //     this.$notify({ type: 'info', title: 'New like!', text: `${message.from.username} liked your post: ${message.post.content} (${message.post.author.username})` });
+        // });
     },
     async mounted() {
         await axios.get('/auth/user', { headers: { token: localStorage.getItem('auth_token') } })
@@ -79,7 +79,7 @@ export default {
                 this.user.myFollowings = this.user.followings.length;
                 this.isUserLoaded = true;
                 this.$store.dispatch('saveUser', this.user);
-                this.socket.emit('online', this.user);
+                // this.socket.emit('online', this.user);
 
             }, err => {
                 this.$notify({ type: 'error', title: 'Error!', text: "Trouble in getting user..." });

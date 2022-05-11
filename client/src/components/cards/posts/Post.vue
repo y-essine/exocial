@@ -9,7 +9,7 @@ import axios from 'axios';
 axios.defaults.baseURL = '/api';
 
 
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 
 export default {
@@ -29,7 +29,7 @@ export default {
         return {
             isLiked: false,
             isLocallyLiked: false,
-            socket: io('/'),
+            // socket: io('/'),
         }
     },
     methods: {
@@ -56,7 +56,7 @@ export default {
 
                 await axios.put('/posts/' + postId + '/like', { userId: userId })
                     .then(res => {
-                        this.socket.emit('likedpost', {from: this.currentUser, post: this.post} );
+                        // this.socket.emit('likedpost', {from: this.currentUser, post: this.post} );
                         console.log('likedpost', {from: this.currentUser.username, to: this.post.author.username, post: this.post.content} );
                     }, err => {
                         this.$notify({ type: 'error', title: 'Error!', text: "Trouble in like/dislike..." });
