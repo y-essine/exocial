@@ -8,9 +8,6 @@ import Signup from '/src/components/Signup.vue'
 
 import NProgress from 'nprogress'
 
-const componentsUrl = '/src/components';
-const pagesUrl = '/src/components/pages';
-
 const routes = [
     {
         path: '/',
