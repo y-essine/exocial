@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const Post = require('../../models/Post')
+const Post = require('@posts/model')
 
 const { getPostUser } = require('./custom/users');
 const { createdAt } = require('./custom/posts');
