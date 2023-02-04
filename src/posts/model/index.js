@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const PostSchema = new Schema({
     author: {
@@ -23,6 +24,8 @@ const PostSchema = new Schema({
 },
     { timestamps: true }
 )
+
+PostSchema.plugin(mongoosePaginate);
 
 const PostModel = model('post', PostSchema);
 

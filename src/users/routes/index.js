@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const { SECRETKEY } = require('@config');
 
 
-const { getUserByToken } = require('./custom/users');
+// const { getUserByToken } = require('./custom/users');
 
 //update user
 router.put('/:id', async (req, res) => {
@@ -21,7 +21,7 @@ router.put('/:id', async (req, res) => {
             }
         }
         try {
-            const user = await User.findByIdAndUpdate({$eq: req.params.id}, {
+            const user = await User.findByIdAndUpdate({ $eq: req.params.id }, {
                 $set: req.body,
             });
             res.status(200).json({ message: 'Account updated.' })
@@ -122,7 +122,7 @@ router.put('/:id/follow', async (req, res) => {
     if (req.body.userId !== req.params.id) {
         try {
             const user = await User.findById(req.params.id);
-            const currentUser = await User.findById({$eq: req.body.userId});
+            const currentUser = await User.findById({ $eq: req.body.userId });
             if (!user.followers.includes(req.body.userId)) {
                 await user.updateOne({ $push: { followers: req.body.userId } })
                 await currentUser.updateOne({ $push: { followings: req.params.id } })
@@ -143,8 +143,8 @@ router.put('/:id/follow', async (req, res) => {
 router.put('/:id/unfollow', async (req, res) => {
     if (req.body.userId !== req.params.id) {
         try {
-            const user = await User.findById({$eq: req.params.id});
-            const currentUser = await User.findById({$eq: req.body.userId});
+            const user = await User.findById({ $eq: req.params.id });
+            const currentUser = await User.findById({ $eq: req.body.userId });
             if (user.followers.includes(req.body.userId)) {
                 await user.updateOne({ $pull: { followers: req.body.userId } })
                 await currentUser.updateOne({ $pull: { followings: req.params.id } })

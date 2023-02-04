@@ -15,12 +15,12 @@ dotenv.config();
 const { PORT, mongoUri } = require('./config');
 
 const authRoute = require('./routes/api/auth')
-const usersRoute = require('./routes/api/users')
-const postsRoute = require('./routes/api/posts')
+// const usersRoute = require('./routes/api/users')
+// const postsRoute = require('./routes/api/posts')
 
 // const routeAuth = require('@auth/routes');
-// const routeUsers = require('@users/routes');
-// const routePosts = require('@posts/routes');
+const routeUsers = require('@users/routes');
+const routePosts = require('@posts/routes');
 
 // set up rate limiter: maximum of five requests per minute
 const limiter = new RateLimit({
@@ -54,12 +54,12 @@ mongoose
 
 //api
 app.use('/api/auth', authRoute);
-app.use('/api/users', usersRoute);
-app.use('/api/posts', postsRoute);
+// app.use('/api/users', usersRoute);
+// app.use('/api/posts', postsRoute);
 
 // app.use('/api/v1/auth', routeAuth);
-// app.use('/api/v1/users', routeUsers);
-// app.use('/api/v1/posts', routePosts);
+app.use('/api/v1/users', routeUsers);
+app.use('/api/v1/posts', routePosts);
 
 //get front
 if (process.env.NODE_ENV == 'production') {
@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
     });
     socket.on('likedpost', (data) => {
         console.log(`${data.from.username} liked your post: ${data.post.content} (${data.post.author.username})`);
-        socket.broadcast.to(data.post.author.username).emit('likednotif', {from: data.from, post: data.post});
+        socket.broadcast.to(data.post.author.username).emit('likednotif', { from: data.from, post: data.post });
     });
     socket.on('followeduser', (data) => {
         console.log('Message received :', data.from.username + ' followed you!');

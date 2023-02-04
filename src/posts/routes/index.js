@@ -2,9 +2,44 @@ const router = require('express').Router();
 
 const Post = require('@posts/model')
 
-const { getPostUser } = require('./custom/users');
-const { createdAt } = require('./custom/posts');
+const AuthService = require('@auth/service');
+const PostService = require('@posts/service');
 
+const { validatePostsRequest, getAuthHeader, getQueryOptions } = require('@utils');
+
+// const { getPostUser } = require('./custom/users');
+// const { createdAt } = require('./custom/posts');
+
+
+
+// get user posts
+router.get('/', async (req, res) => {
+    const token = getAuthHeader({ headers: req.headers })
+    const { user, page, limit } = getQueryOptions({ query: req.query })
+    validatePostsRequest({ token, user }, res);
+
+    try {
+        const userPosts = await PostService.getUserPosts(user, page, limit);
+        return res.status(200).json(userPosts);
+
+    } catch (err) {
+        res.status(500).json({ error: err })
+    }
+})
+
+// get user feed
+router.get('/feed', async (req, res) => {
+    const token = getAuthHeader({ headers: req.headers })
+    const { user, page, limit } = getQueryOptions({ query: req.query })
+    validatePostsRequest({ token, user }, res);
+
+    try {
+        const userFeed = await PostService.getUserFeed(user, page, limit);
+        return res.status(200).json(userFeed);
+    } catch (err) {
+        res.status(500).json({ error: err })
+    }
+})
 
 //create post
 
@@ -12,7 +47,7 @@ router.post('/', async (req, res) => {
     const newPost = new Post(req.body)
     try {
         const savedPost = await newPost.save();
-        res.status(200).json({ post: savedPost })
+        res.status(201).json({ post: savedPost })
     } catch (error) {
         console.log(error);
     }
@@ -44,80 +79,6 @@ router.delete('/:id', async (req, res) => {
         } else {
             res.status(403).json({ message: 'You can only delete your post' })
         }
-    } catch (error) {
-        res.status(500).json({ error: error }) 
-    }
-})
-
-
-
-
-//get post
-router.get('/:id', async (req, res) => {
-    try {
-        const post = await Post.findById(req.params.id);
-        if (!post)
-            return res.status(403).json({ message: 'post not found' })
-        const postUser = await getPostUser(post.userId);
-        res.status(200).json({ post: post, postUser: postUser });
-    } catch (error) {
-        res.status(500).json({ error: error })
-    }
-})
-
-//get (all) posts
-router.post('/feed/all', async (req, res) => {
-    try {
-        let feed = [];
-
-        const currentUser = await getPostUser(req.body.userId)
-        if (!currentUser)
-            return res.status(404).json({ error: 'User not found' });
-
-        // my posts
-        const userPosts = currentUser ? (await Post.find({ author: currentUser._id })
-            .populate('author', 'username avatar firstname lastname createdAt')
-            .populate('likes', 'avatar firstname lastname username')
-            .sort({ createdAt: -1 })) : {};
-        userPosts.forEach(element => {
-            feed.push(element)
-        });
-
-        // followed posts
-        await Promise.all(
-            currentUser.followings.map(async (followedId) => {
-                let postUser = await getPostUser(followedId);
-                let posts = (postUser) ? (await Post.find({ author: followedId })
-                    .populate('author', 'username avatar firstname lastname createdAt')
-                    .populate('likes', 'avatar firstname lastname username')
-                    .sort({ createdAt: -1 })) : {};
-                posts.forEach(element => {
-                    feed.push(element)
-                });
-            })
-        );
-
-        res.json(feed.sort(createdAt));
-
-    } catch (error) {
-        res.status(500).json({ error: error, message: 'Caught exception, error...' })
-    }
-})
-
-
-// get user posts
-router.get('/:id/posts', async (req, res) => {
-    let feed = [];
-    try {
-        const userPosts = await (Post.find({ author: req.params.id })
-            .populate('author', 'username avatar firstname lastname createdAt')
-            .populate('likes', 'avatar firstname lastname username')
-            .sort({ createdAt: -1 }));
-        userPosts.forEach(element => {
-            feed.push(element)
-        });
-        return res.status(200).json(feed)
-
     } catch (error) {
         res.status(500).json({ error: error })
     }
