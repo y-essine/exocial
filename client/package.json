@@ -14,6 +14,7 @@
     "@tailwindcss/line-clamp": "^0.3.0",
     "axios": "^0.24.0",
     "dayjs": "^1.11.7",
+    "exocial": "file:..",
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
     "socket.io": "^4.4.1",
