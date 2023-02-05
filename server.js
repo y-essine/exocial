@@ -1,3 +1,4 @@
+require('module-alias/register')
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -16,6 +17,10 @@ const { PORT, mongoUri } = require('./config');
 const authRoute = require('./routes/api/auth')
 const usersRoute = require('./routes/api/users')
 const postsRoute = require('./routes/api/posts')
+
+// const routeAuth = require('@auth/routes');
+// const routeUsers = require('@users/routes');
+// const routePosts = require('@posts/routes');
 
 // set up rate limiter: maximum of five requests per minute
 const limiter = new RateLimit({
@@ -51,6 +56,10 @@ mongoose
 app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/posts', postsRoute);
+
+// app.use('/api/v1/auth', routeAuth);
+// app.use('/api/v1/users', routeUsers);
+// app.use('/api/v1/posts', routePosts);
 
 //get front
 if (process.env.NODE_ENV == 'production') {

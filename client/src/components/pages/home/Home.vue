@@ -18,15 +18,15 @@
         v-bind:user="this.user"
     />
 
+    <div v-if="!isFeedLoaded" class="text-red-500/70 flex justify-center p-8">
+        <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
+    </div>
     <transition-group name="post-list" tag="ul">
         <li v-for="(post,index) in feed" :key="post._id">
             <Post v-bind:post="post" :index="index" :currentUser="user" />
         </li>
     </transition-group>
 
-    <div v-if="!isFeedLoaded" class="text-red-500 opacity-75 flex justify-center mt-56">
-        <font-awesome-icon icon="circle-notch" size="5x" class="animate-spin" />
-    </div>
 </template>
 
 <script>
