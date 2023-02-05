@@ -85,8 +85,8 @@ export default {
         this.checkIfLiked();
     },
     components: {
-        Like
-    }
+    Like
+}
 
 }
 </script>
@@ -107,9 +107,13 @@ export default {
                             post.author.firstname + ' ' + post.author.lastname
                         }}</h2>
                     </router-link>
-                    <small class="text-sm text-t-accent cursor-pointer">{{ fromNow(post.createdAt) }}</small>
-                </div>
-                <p class="text-t-accent text-xs">Joined {{ formatDate(post.author.createdAt) }}.</p>
+                    <span class="ml-auto" v-if="currentUser.id == post.author._id">
+                        <font-awesome-icon :icon="['fas', 'trash-alt']"
+                            class="mr-3 w-4 cursor-pointer text-white/20 hover:text-red-500/70" />
+                        <font-awesome-icon :icon="['fas', 'edit']"
+                            class="mr-3 w-4 cursor-pointer text-white/20 hover:text-blue-500/70" />
+                    </span>
+                </div><small class="text-sm text-t-accent cursor-pointer">{{ fromNow(post.createdAt) }}</small>
                 <p class="mt-3 text-t-secondary text-sm">{{ post.content }}</p>
                 <div class="mt-4 flex">
                     <span class="flex items-center">
@@ -126,12 +130,6 @@ export default {
                                 </router-link>
                             </span>
                         </div>
-                    </span>
-                    <span class="ml-auto" v-if="currentUser.id == post.author._id">
-                        <font-awesome-icon :icon="['fas', 'trash-alt']"
-                            class="mr-3 w-4 cursor-pointer text-t-accent hover:text-red-500/70" />
-                        <font-awesome-icon :icon="['fas', 'edit']"
-                            class="mr-3 w-4 cursor-pointer text-t-accent hover:text-blue-500/70" />
                     </span>
                 </div>
             </div>
